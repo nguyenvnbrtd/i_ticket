@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>619055379859-lkcs7meu763qfchffplomjffdeoljo7u.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.619055379859-lkcs7meu763qfchffplomjffdeoljo7u</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDOT2AFKIDteMrCNiozrYc0RGpJ9rl4wU4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>619055379859</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.idp.iTicket</string>
+	<key>PROJECT_ID</key>
+	<string>i-ticket-d50b6</string>
+	<key>STORAGE_BUCKET</key>
+	<string>i-ticket-d50b6.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:619055379859:ios:9a5472ca8b084fef37a466</string>
+</dict>
+</plist>

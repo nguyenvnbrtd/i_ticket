@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "619055379859",
+    "project_id": "i-ticket-d50b6",
+    "storage_bucket": "i-ticket-d50b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619055379859:android:65edc06f688a871637a466",
+        "android_client_info": {
+          "package_name": "com.idp.i_ticket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "619055379859-2skjq4r7juvio8aolblnkkubs34ornt3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4JUyxciEGwuKeRF93slHQ6AaVeWTC94g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "619055379859-2skjq4r7juvio8aolblnkkubs34ornt3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,73 @@
+{
+  "helloWorld": "Hé lô !",
+  "login": "Đăng nhập",
+  "contact": "Liên hệ",
+  "userName": "Tên đăng nhập",
+  "password": "Mật khẩu",
+  "userNameIsNotEmpty": "Tên đăng nhập không được để trống!",
+  "passwordIsNotEmpty": "Mật khẩu không được để trống!",
+
+  "loginCardPage": "Đăng nhập",
+  "imeiCardPage": "Xem IMEI",
+  "supportCardPage": "Hỗ trợ",
+  "informationCardPage" : "Thông tin",
+
+  "quitAppMessage" : "Bạn có chắc chắn muốn thoát?",
+  "copyImei": "Sao chép IMEI",
+  "copyImeiMessage": "Đã sao chép vào bộ nhớ tạm",
+  "activatedImeiMessage": "IMEI của thiết bị đã được active sử dụng.",
+  "versionInfo": "Thông tin phiên bản",
+  "appIntro": "Giới thiệu chung ứng dụng",
+  "appIntroMessage" : "Lorem ipsum is  asd asas",
+  "version" : "Phiên bản",
+  "deviceInfo" : "Thông tin thiết bị",
+  "operatingSystemVersion" : "Phiên bản Android/IOS",
+  "sdkVersion": "Phiên bản SDK",
+  "versionCode": "Mã phiên bản",
+  "technicalSupport": "Hỗ trợ kỹ thuật",
+  "techPhone1": "0905 634 268",
+  "techHotline1": "18970",
+  "techPhone2": "0934 558 532",
+  "techHotline2": "18970",
+  "majorSupport": "Hỗ trợ nghiệp vụ",
+  "majorPhone1": "0909 104 042",
+  "majorHotline1": "8047",
+  "majorPhone2": "0934 558 532",
+  "majorHotline2": "3464",
+  "feedbackAndReport": "Góp ý & báo lỗi",
+  "mailFeedback1": "thanhtc21@fpt.com.vn",
+  "mailFeedback2": "hientt46@fpt.com.vn",
+
+  "invalidDownloadUrl": "Link cài đặt không khả dụng",
+  "cannotInstallApp": "Không thể cài đặt app",
+
+  "deviceImeiIsNotEmpty": "DeviceIMEI không được để trống",
+  "activatingImei": "Kích hoạt Imei",
+  "activatingImeiMessage": "Thiết bị chưa được active sử dụng. Vui lòng copy IMEI và gửi Admin  acitve sử dụng!",
+  "cannotGetImei": "Không thể lấy Imei",
+
+  "home": "màn hình chính",
+  "mapType": "Loại bản đồ",
+  "normalType": "Mặc định",
+  "satelliteType": "Vệ tinh",
+  "terrainType": "Địa hình",
+
+  "profile": "Thông tin",
+
+  "alert": "Thông báo",
+  "lostNetwork": "Mất kết nối",
+  "ok": "Đồng ý",
+  "cancel": "Hủy",
+
+
+  "lostNetworkMessage": "Đã mất kết nối mạng. Vui lòng kiểm tra lại kết nối mạng",
+  "systemErrorMessage": "Hệ thống đang gặp sự cố vui lòng thử lại sau.",
+  "getDeviceId": "Lấy mã kích hoạt",
+  "loading": "Đang tải",
+  "downloading": "Đang tải xuống",
+  "loadingMessage": "Đang lấy dữ liệu, vui lòng chờ trong giây lát.",
+
+  "pick_file_title": "Chọn phương thức để lấy ảnh",
+  "pick_file_form_gallery": "Lấy từ thư viện",
+  "pick_file_from_take_new": "Chụp ảnh mới"
+}

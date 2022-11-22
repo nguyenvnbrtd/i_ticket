@@ -8,8 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../../base/blocs/base_bloc.dart';
 import '../../../injector.dart';
 import '../event/login_event.dart';
-import '../repos/login_repository.dart';
-import '../state/login_state.dart';
+import '../states/login_state.dart';
 
 class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
   final UserRepository _userRepository = it<UserRepository>();

@@ -23,6 +23,18 @@ class UserRepository {
     return _firebaseAuth != null;
   }
 
+  Future<void> sendResetCode(String email) async {
+    await _firebaseAuth?.sendPasswordResetEmail(email: email);
+  }
+
+  Future<void> verifyCode(String email) async {
+
+  }
+
+  Future<void> resetPassword(String email) async {
+
+  }
+
   Future<User?> getUser() async {
     try {
       return _firebaseAuth?.currentUser;

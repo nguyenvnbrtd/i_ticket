@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animation/features/forgot_password/pages/forgot_password_screen.dart';
 import 'package:flutter_animation/features/home/pages/home_screen.dart';
 import 'package:flutter_animation/features/login/pages/login_screen.dart';
 
@@ -12,6 +13,7 @@ class Routes {
   static const String splash = '/';
   static const String login = '/login';
   static const String register = '/register';
+  static const String forgotPassword = '/forgot_pass';
   static const String home = '/home';
 
   static String _current = splash;
@@ -36,6 +38,11 @@ class Routes {
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: register),
           widget: const RegisterScreen(),
+        );
+      case forgotPassword:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: forgotPassword),
+          widget: const ForgotPasswordScreen(),
         );
       case home:
         return SlideRightRoute(

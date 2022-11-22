@@ -3,18 +3,16 @@ import 'package:flutter_animation/core/src/app_colors.dart';
 import 'package:flutter_animation/core/src/assets.dart';
 import 'package:flutter_animation/core/utils/dimension.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
-import 'package:flutter_animation/features/login/event/login_event.dart';
-import 'package:flutter_animation/features/login/state/login_state.dart';
 import 'package:flutter_animation/widgets/base_screen/origin_screen.dart';
-import 'package:flutter_animation/widgets/staless/custom_icon.dart';
 import 'package:flutter_animation/widgets/staless/loading_button.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
 import 'package:flutter_animation/widgets/stateful/text_input.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../widgets/staless/base_tab_widget.dart';
 import '../blocs/register_bloc.dart';
 import '../event/register_event.dart';
-import '../state/register_state.dart';
+import '../states/register_state.dart';
 import 'components/google_sign_in_button.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -106,11 +104,13 @@ class _RegisterScreen extends State<RegisterScreen> {
                 ],
               ),
               BlocBuilder<RegisterBloc, RegisterState>(
-                builder: (context, state) => LoadingButton(
-                  label: registerLabel,
-                  minWidth: DeviceDimension.screenWidth * 0.6,
-                  onPress: _onRegisterPress,
-                  isLoading: state.isLoading,
+                builder: (context, state) => SizedBox(
+                  width: DeviceDimension.screenWidth * 0.6,
+                  child: LoadingButton(
+                    label: registerLabel,
+                    onPress: _onRegisterPress,
+                    isLoading: state.isLoading,
+                  ),
                 ),
               ),
               Stack(

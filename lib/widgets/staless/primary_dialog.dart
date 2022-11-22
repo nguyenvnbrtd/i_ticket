@@ -34,21 +34,25 @@ class PrimaryDialog extends StatelessWidget {
 
     if (onCancel != null) {
       actions.add(
-        PrimaryButton(
-          onPress: onCancel ?? () {},
-          label: cancelLabel,
-          color: Colors.white,
-          textColor: Colors.black45,
-          minWidth: onConfirm == null ? width * 0.4 : 100,
+        SizedBox(
+          width: onConfirm == null ? width * 0.4 : 100,
+          child: PrimaryButton(
+            onPress: onCancel ?? () {},
+            label: cancelLabel,
+            color: Colors.white,
+            textColor: Colors.black45,
+          ),
         ),
       );
     }
 
     if (onConfirm != null) {
-      actions.add(PrimaryButton(
-        onPress: onConfirm ?? () {},
-        label: confirmLabel,
-        minWidth: onCancel == null ? width * 0.4 : 100,
+      actions.add(SizedBox(
+        width: onCancel == null ? width * 0.4 : 100,
+        child: PrimaryButton(
+          onPress: onConfirm ?? () {},
+          label: confirmLabel,
+        ),
       ));
     }
     return Stack(

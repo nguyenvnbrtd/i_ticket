@@ -13,6 +13,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../injector.dart';
+import '../../route/page_routes.dart';
 import 'constants.dart';
 import 'device_info.dart';
 import 'error_handler.dart';
@@ -131,6 +132,7 @@ class UtilsHelper {
       // await DialogUtils.dismissPopup();
     } catch (e) {
       // await DialogUtils.dismissPopup();
+      if(onFailed != null) onFailed(e);
       pushError(e);
     }
   }
@@ -187,6 +189,10 @@ class UtilsHelper {
   static bool popUntil(RoutePredicate predicate) {
     Navigator.popUntil(navigatorKey.currentContext!, predicate);
     return true;
+  }
+
+  static void popToLogin(){
+    UtilsHelper.popUntil((route) => route.settings.name == Routes.login);
   }
 
   static void pushNamed(String route) {

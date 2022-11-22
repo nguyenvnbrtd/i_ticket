@@ -10,7 +10,6 @@ class PrimaryButton extends StatelessWidget {
     required this.onPress,
     this.color = Colors.teal,
     this.textColor = Colors.white,
-    this.minWidth = 50,
     this.height = 45,
     this.child,
   }) : super(key: key);
@@ -19,7 +18,6 @@ class PrimaryButton extends StatelessWidget {
   final Color textColor;
   final VoidCallback onPress;
   final Color color;
-  final double minWidth;
   final double height;
   final Widget? child;
 
@@ -36,7 +34,6 @@ class PrimaryButton extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           padding: const EdgeInsets.all(edgSize),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(edgSize)),
-          constraints: BoxConstraints(minWidth: minWidth, maxWidth: MediaQuery.of(context).size.width * 0.6),
           child: Center(
             child: child ??
                 Text(

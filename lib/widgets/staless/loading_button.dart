@@ -7,7 +7,6 @@ class LoadingButton extends StatelessWidget {
   final Color textColor;
   final VoidCallback onPress;
   final Color? color;
-  final double minWidth;
   final bool isLoading;
 
   const LoadingButton(
@@ -16,7 +15,6 @@ class LoadingButton extends StatelessWidget {
       required this.onPress,
       this.color,
       this.textColor = Colors.white,
-      this.minWidth = 50,
       this.isLoading = false})
       : super(key: key);
 
@@ -30,7 +28,6 @@ class LoadingButton extends StatelessWidget {
       },
       color: color ?? AppColors.primary,
       label: label,
-      minWidth: minWidth,
       textColor: textColor,
       child: isLoading
           ? Center(

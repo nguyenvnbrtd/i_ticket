@@ -4,17 +4,17 @@ import 'package:flutter_animation/core/src/assets.dart';
 import 'package:flutter_animation/core/utils/dimension.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/features/login/event/login_event.dart';
-import 'package:flutter_animation/features/login/state/login_state.dart';
 import 'package:flutter_animation/widgets/base_screen/origin_screen.dart';
-import 'package:flutter_animation/widgets/staless/custom_icon.dart';
 import 'package:flutter_animation/widgets/staless/loading_button.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
 import 'package:flutter_animation/widgets/stateful/text_input.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../route/page_routes.dart';
 import '../../../widgets/staless/base_tab_widget.dart';
 import '../../register/pages/components/google_sign_in_button.dart';
 import '../blocs/login_bloc.dart';
+import '../states/login_state.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -95,15 +95,23 @@ class _LoginScreen extends State<LoginScreen> {
                     imageBack: Assets.eyeIcon,
                   ),
                   const SpaceVertical(height: 10),
-                  Text(forgotPass, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.blue600))
+                  BaseTabWidget(
+                    onTap: _openForgotPassword,
+                    child: Text(
+                      forgotPass,
+                      style: theme.textTheme.bodySmall?.copyWith(color: AppColors.blue600),
+                    ),
+                  ),
                 ],
               ),
               BlocBuilder<LoginBloc, LoginState>(
-                builder: (context, state) => LoadingButton(
-                  label: loginLabel,
-                  minWidth: DeviceDimension.screenWidth * 0.6,
-                  onPress: _onLoginPress,
-                  isLoading: state.isLoading,
+                builder: (context, state) => SizedBox(
+                  width: DeviceDimension.screenWidth * 0.6,
+                  child: LoadingButton(
+                    label: loginLabel,
+                    onPress: _onLoginPress,
+                    isLoading: state.isLoading,
+                  ),
                 ),
               ),
               Stack(
@@ -150,5 +158,9 @@ class _LoginScreen extends State<LoginScreen> {
 
   void _openRegister() {
     UtilsHelper.pushNamed(Routes.register);
+  }
+
+  void _openForgotPassword() {
+    UtilsHelper.pushNamed(Routes.forgotPassword);
   }
 }

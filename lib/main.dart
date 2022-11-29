@@ -6,8 +6,6 @@ import 'package:flutter_animation/core/blocs/authentication/authentication_bloc.
 import 'package:flutter_animation/core/blocs/authentication/authentication_state.dart';
 import 'package:flutter_animation/core/utils/log_utils.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
-import 'package:flutter_animation/features/home/pages/home_screen.dart';
-import 'package:flutter_animation/features/login/pages/login_screen.dart';
 import 'package:flutter_animation/features/splash/pages/splash_screen.dart';
 import 'package:flutter_animation/repos/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/src/app_colors.dart';
 import 'core/src/app_theme.dart';
 import 'core/utils/dimension.dart';
+import 'features/user_info/repos/user_info_repository.dart';
 import 'firebase_options.dart';
 import 'injector.dart';
 import 'route/page_routes.dart';
@@ -76,6 +75,8 @@ class MyApp extends StatelessWidget {
 
   void _authenticationListener(BuildContext context, state) async {
     if (state is AuthenticationStateLoggedIn) {
+      final userInfoRepository = it<UserInfoRepository>();
+      await userInfoRepository.initUser(state.id);
       UtilsHelper.popAllAndPushNamed(Routes.home);
       return;
     }

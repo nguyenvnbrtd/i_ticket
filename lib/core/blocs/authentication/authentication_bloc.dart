@@ -11,15 +11,16 @@ class AuthenticationBloc extends BaseBloc<AuthenticationEvent, AuthenticationSta
 
   AuthenticationBloc() : super(AuthenticationStateInitial()) {
     on<OnStartAuthentication>((event, emit) async {
-      if (await _userRepository.getUser() != null) {
-        emit(AuthenticationStateLoggedIn());
+      final user = await _userRepository.getUser();
+      if (user != null) {
+        emit(AuthenticationStateLoggedIn(id: user.uid));
       } else {
         emit(AuthenticationStateNotLoggedIn());
       }
     });
 
     on<AuthenticationEventLoggingIn>((event, emit) {
-      emit(AuthenticationStateLoggedIn());
+      emit(AuthenticationStateLoggedIn(id: event.userId));
     });
 
     on<AuthenticationEventLoggingOut>((event, emit) {

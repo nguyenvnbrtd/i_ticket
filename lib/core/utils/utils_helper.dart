@@ -68,7 +68,9 @@ class UtilsHelper {
   /// @return string value by json key
   ///
   static String getJsonValueString(Map<String, dynamic> json, List<String> keys, {bool isCheckAllCase = true}) {
-    return getJsonValue(json, keys, isCheckAllCase: isCheckAllCase).toString();
+    final data = getJsonValue(json, keys, isCheckAllCase: isCheckAllCase);
+    if(data == null) return '';
+    return data.toString();
   }
 
   /// check key có tồn tại trong json không

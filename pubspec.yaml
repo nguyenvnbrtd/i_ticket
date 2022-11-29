@@ -39,8 +39,9 @@ dependencies:
   #splash_screen
   flutter_native_splash: 2.1.1
   #firebase:
-  firebase_core: ^1.24.0
-  firebase_auth: ^3.11.2
+  firebase_core: ^2.3.0
+  firebase_auth: ^4.1.4
+  cloud_firestore: ^4.1.0
 
   #device:
   app_settings: ^4.1.8

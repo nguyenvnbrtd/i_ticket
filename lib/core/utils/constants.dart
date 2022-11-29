@@ -30,4 +30,8 @@ class Constants {
 
   static const DATE_TIME_FORMAT = 'dd-MM-yyyy hh:mm:ss';
   static const TIME_FORMAT = 'hh:mm:ss';
+
+  /// firebase key
+
+  static const USER = 'user';
 }

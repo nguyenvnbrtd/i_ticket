@@ -25,14 +25,14 @@ void main() async {
   );
   await init();
 
-  runZonedGuarded(
-    () {
+  // runZonedGuarded(
+    // () {
       runApp(const MyApp());
-    },
-    (error, stack) {
-      LogUtils.e(message: error.toString());
-    },
-  );
+    // },
+    // (error, stack) {
+    //   LogUtils.e(message: error.toString());
+    // },
+  // );
 }
 
 class MyApp extends StatelessWidget {

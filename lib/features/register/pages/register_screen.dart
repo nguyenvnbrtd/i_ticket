@@ -24,10 +24,8 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreen extends State<RegisterScreen> {
   late final TextEditingController _emailController;
-  late final TextEditingController _nameController;
   late final TextEditingController _passwordController;
   late final TextEditingController _confirmPasswordController;
-  late final TextEditingController _phoneController;
   late final RegisterBloc _registerBloc;
 
   final String h1 = 'Register Account';
@@ -45,10 +43,8 @@ class _RegisterScreen extends State<RegisterScreen> {
   @override
   void initState() {
     _emailController = TextEditingController();
-    _nameController = TextEditingController();
     _passwordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
-    _phoneController = TextEditingController();
     _registerBloc = RegisterBloc();
 
     super.initState();

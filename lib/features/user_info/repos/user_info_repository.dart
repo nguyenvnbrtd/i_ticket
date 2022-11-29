@@ -13,9 +13,22 @@ class UserInfoRepository{
   // collection reference
   final CollectionReference userCollection = FirebaseFirestore.instance.collection(Constants.USER);
 
+  Future<void> createUserData(UserInfo userInfo) async {
+    await userCollection.doc(userInfo.id).set(userInfo.toJson());
+
+    // init the id
+    this.userInfo = userInfo;
+  }
+
   Future<void> initUser(String id) async {
     final response = await userCollection.doc(id).get(const GetOptions(source: Source.serverAndCache));
-    userInfo = UserInfo.fromJson(response.data());
+    final data = response.data();
+    if(data != null){
+      userInfo = UserInfo.fromJson(response.data());
+    }else{
+      userInfo = UserInfo();
+    }
+
     LogUtils.i(message: userInfo!.toJson().toString(), tag: 'user information');
   }
 

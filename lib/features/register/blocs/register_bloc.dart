@@ -2,6 +2,7 @@ import 'package:flutter_animation/base/blocs/base_bloc.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
 
 import '../../../injector.dart';
+import '../../../models/user_info_initial_argument.dart';
 import '../../../repos/user_repository.dart';
 import '../../../route/page_routes.dart';
 import '../event/register_event.dart';
@@ -27,7 +28,8 @@ class RegisterBloc extends BaseBloc<RegisterEvent, RegisterState> {
             if (user == null) return;
 
             emit(state.copyWith(isLoading: false));
-            UtilsHelper.login(user.uid);
+
+            UtilsHelper.pushNamed(Routes.userInfoInitial, UserInfoInitialArgument(user.uid, user.email ?? ''));
           },
           onFailed: (e) {
             emit(state.copyWith(isLoading: false));

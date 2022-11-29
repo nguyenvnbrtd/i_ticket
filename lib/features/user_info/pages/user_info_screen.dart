@@ -12,6 +12,7 @@ import 'package:flutter_animation/widgets/staless/primary_button.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../base/blocs/base_state.dart';
+import '../../../core/utils/utils_helper.dart';
 import '../../../models/user_info.dart';
 import '../repos/user_info_repository.dart';
 import 'components/user__info_input.dart';
@@ -116,6 +117,7 @@ class _UserInfoScreen extends State<UserInfoScreen> {
   }
 
   void onSave() async {
+    UtilsHelper.dismissKeyBoard();
     userInfoBloc.add(OnSavePress(userInfo: UserInfo(
       name: nameController.text,
       phone: phoneController.text,

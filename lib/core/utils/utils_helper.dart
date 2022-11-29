@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animation/core/blocs/authentication/authentication_bloc.dart';
 import 'package:flutter_animation/core/blocs/authentication/authentication_event.dart';
 import 'package:flutter_animation/core/utils/recase.dart';
+import 'package:flutter_animation/models/arguments_screen_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -127,7 +128,7 @@ class UtilsHelper {
   /// when using it in a bloc and call a emit in function
   /// you must to await
   static Future<void> runWithLoadingDialog(
-      {required Function func, Function(Object e)? onFailed, bool isShowProgress = false}) async {
+      {required Function func, Function(Object e)? onFailed, bool isShowProgress = false, bool showLoading = true}) async {
     try {
       // DialogUtils.showLoadingDialog(isShowProgress: isShowProgress);
       await func();
@@ -193,12 +194,18 @@ class UtilsHelper {
     return true;
   }
 
+  static bool popUntilName(String routeName) {
+    Navigator.popUntil(navigatorKey.currentContext!, (route) => route.settings.name == routeName);
+    return true;
+  }
+
   static void popToLogin(){
     UtilsHelper.popUntil((route) => route.settings.name == Routes.login);
   }
 
-  static void pushNamed(String route) {
-    Navigator.pushNamed(navigatorKey.currentContext!, route);
+  static void pushNamed(String route, [Object? data]) {
+    final arg = ArgumentsScreenModel(title: route, data: data);
+    Navigator.pushNamed(navigatorKey.currentContext!, route, arguments: arg);
   }
 
   static void popAllAndPushNamed(String route) {

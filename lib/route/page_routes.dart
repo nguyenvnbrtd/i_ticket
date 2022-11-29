@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animation/features/forgot_password/pages/forgot_password_screen.dart';
 import 'package:flutter_animation/features/home/pages/home_screen.dart';
 import 'package:flutter_animation/features/login/pages/login_screen.dart';
+import 'package:flutter_animation/features/user_info_inital/pages/user_info_initial_screen.dart';
+import 'package:flutter_animation/models/user_info_initial_argument.dart';
 
 import '../features/register/pages/register_screen.dart';
 import '../features/splash/pages/splash_screen.dart';
 import '../features/user_info/pages/user_info_screen.dart';
+import '../models/arguments_screen_model.dart';
 
 class Routes {
 
@@ -17,6 +20,7 @@ class Routes {
   static const String forgotPassword = '/forgot_pass';
   static const String home = '/home';
   static const String userInfo = '/user_info';
+  static const String userInfoInitial = '/user_info_initial';
 
   static String _current = splash;
 
@@ -24,6 +28,10 @@ class Routes {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     _current = settings.name ?? splash;
+
+    final arguments = settings.arguments != null && settings.arguments is ArgumentsScreenModel
+        ? settings.arguments as ArgumentsScreenModel
+        : ArgumentsScreenModel(title: "unknowns");
 
     switch (settings.name) {
       case splash:
@@ -55,6 +63,12 @@ class Routes {
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: userInfo),
           widget: const UserInfoScreen(),
+        );
+      case userInfoInitial:
+        final arg = arguments.data as UserInfoInitialArgument;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: userInfo),
+          widget: UserInfoInitialScreen(uid: arg.uid, email: arg.email),
         );
 
       default:

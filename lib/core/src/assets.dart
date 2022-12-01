@@ -4,6 +4,11 @@ class Assets {
 
   static const String googleIcon = 'assets/images/ic_gg.png';
   static const String eyeIcon = 'assets/images/eye_1.png';
+  static const String homeIcon = 'assets/images/home.png';
+  static const String bookingIcon = 'assets/images/booking.png';
+  static const String routeIcon = 'assets/images/route.png';
+  static const String settingIcon = 'assets/images/setting.png';
+  static const String userIcon = 'assets/images/user.png';
 
 
 }

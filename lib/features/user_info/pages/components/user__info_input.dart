@@ -6,8 +6,10 @@ class UserInfoInput extends StatefulWidget {
   final TextEditingController? controller;
   final String title;
   final String hint;
+  final ValueChanged<String>? onChanged;
 
-  const UserInfoInput({Key? key, this.controller, this.title = 'none', this.hint = 'none'}) : super(key: key);
+  const UserInfoInput({Key? key, this.controller, this.title = 'none', this.hint = 'none', this.onChanged})
+      : super(key: key);
 
   @override
   State<UserInfoInput> createState() => _UserInfoInputState();
@@ -34,11 +36,13 @@ class _UserInfoInputState extends State<UserInfoInput> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SpaceVertical(height: 10),
-        Text(widget.title,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: hasData ? AppColors.grey : null,
-              fontWeight: hasData ? null : FontWeight.w500,
-            )),
+        Text(
+          widget.title,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: hasData ? AppColors.grey : null,
+            fontWeight: hasData ? null : FontWeight.w500,
+          ),
+        ),
         TextField(
           controller: controller,
           style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500, fontSize: 18),
@@ -66,5 +70,6 @@ class _UserInfoInputState extends State<UserInfoInput> {
         hasData = true;
       });
     }
+    if (widget.onChanged != null) widget.onChanged!(value);
   }
 }

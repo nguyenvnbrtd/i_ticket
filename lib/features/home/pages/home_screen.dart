@@ -16,14 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      UtilsHelper.pushNamed(Routes.userInfo);
-    });
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

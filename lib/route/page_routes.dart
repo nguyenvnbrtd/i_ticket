@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animation/features/forgot_password/pages/forgot_password_screen.dart';
 import 'package:flutter_animation/features/home/pages/home_screen.dart';
 import 'package:flutter_animation/features/login/pages/login_screen.dart';
-import 'package:flutter_animation/features/user_info_inital/pages/user_info_initial_screen.dart';
+import 'package:flutter_animation/features/main/pages/main_screen.dart';
+import 'package:flutter_animation/features/user_info/pages/user_info_initial_screen.dart';
 import 'package:flutter_animation/models/user_info_initial_argument.dart';
 
 import '../features/register/pages/register_screen.dart';
@@ -18,6 +19,7 @@ class Routes {
   static const String login = '/login';
   static const String register = '/register';
   static const String forgotPassword = '/forgot_pass';
+  static const String main = '/main';
   static const String home = '/home';
   static const String userInfo = '/user_info';
   static const String userInfoInitial = '/user_info_initial';
@@ -54,6 +56,11 @@ class Routes {
           routeSettings: const RouteSettings(name: forgotPassword),
           widget: const ForgotPasswordScreen(),
         );
+      case main:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: main),
+          widget: const MainScreen(),
+        );
       case home:
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: home),
@@ -67,7 +74,7 @@ class Routes {
       case userInfoInitial:
         final arg = arguments.data as UserInfoInitialArgument;
         return SlideRightRoute(
-          routeSettings: const RouteSettings(name: userInfo),
+          routeSettings: const RouteSettings(name: userInfoInitial),
           widget: UserInfoInitialScreen(uid: arg.uid, email: arg.email),
         );
 

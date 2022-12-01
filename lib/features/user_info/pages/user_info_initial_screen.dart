@@ -16,8 +16,8 @@ import '../../../widgets/staless/base_tab_widget.dart';
 import '../../../widgets/staless/loading_button.dart';
 import '../../../widgets/staless/spacer.dart';
 import '../../../widgets/stateful/text_input.dart';
-import '../../user_info/event/user_info_event.dart';
-import '../../user_info/repos/user_info_repository.dart';
+import '../event/user_info_event.dart';
+import '../repos/user_info_repository.dart';
 
 class UserInfoInitialScreen extends StatefulWidget {
   final String uid;

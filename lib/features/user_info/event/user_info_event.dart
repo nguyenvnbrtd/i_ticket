@@ -21,3 +21,12 @@ class OnSavePress extends UserInfoEvent{
   @override
   List<Object?> get props => [userInfo];
 }
+
+class OnInfoChanged extends UserInfoEvent{
+  final bool changed;
+
+  OnInfoChanged({required this.changed});
+
+  @override
+  List<Object?> get props => [changed];
+}

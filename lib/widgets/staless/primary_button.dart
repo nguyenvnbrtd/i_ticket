@@ -10,12 +10,14 @@ class PrimaryButton extends StatelessWidget {
     required this.onPress,
     this.color = Colors.teal,
     this.textColor = Colors.white,
+    this.borderColor = Colors.white,
     this.height = 45,
     this.child,
   }) : super(key: key);
 
   final String label;
   final Color textColor;
+  final Color borderColor;
   final VoidCallback onPress;
   final Color color;
   final double height;
@@ -33,7 +35,10 @@ class PrimaryButton extends StatelessWidget {
           height: height,
           clipBehavior: Clip.hardEdge,
           padding: const EdgeInsets.all(edgSize),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(edgSize)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(edgSize),
+            border: Border.all(color: borderColor, width: 1),
+          ),
           child: Center(
             child: child ??
                 Text(

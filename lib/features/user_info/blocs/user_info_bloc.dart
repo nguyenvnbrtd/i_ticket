@@ -6,11 +6,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../../base/blocs/base_bloc.dart';
 import '../../../injector.dart';
 import '../repos/user_info_repository.dart';
+import '../states/user_info_state.dart';
 
-class UserInfoBloc extends BaseBloc<UserInfoEvent, BaseState> {
+class UserInfoBloc extends BaseBloc<UserInfoEvent, UserInfoState> {
   UserInfoRepository repository = it();
 
-  UserInfoBloc() : super(const BaseState()) {
+  UserInfoBloc() : super(UserInfoState.init()) {
     on<OnInitData>((event, emit) async {
       await repository.createUserData(event.userInfo);
     });
@@ -19,16 +20,23 @@ class UserInfoBloc extends BaseBloc<UserInfoEvent, BaseState> {
       (event, emit) async {
         await UtilsHelper.runWithLoadingDialog(
           func: () async {
-            emit(const BaseState(isLoading: true));
+            emit(state.copyWith(isLoading: true));
             await repository.updateUserData(userInfo: event.userInfo);
-            emit(const BaseState(isLoading: false));
+            emit(state.copyWith(isLoading: false, isInfoChanged: false));
             Fluttertoast.showToast(msg: 'Save data success');
           },
           onFailed: (e) {
-            emit(const BaseState(isLoading: false));
+            emit(state.copyWith(isLoading: false));
           },
           showLoading: false,
         );
+      },
+    );
+
+    on<OnInfoChanged>(
+      (event, emit) async {
+        if(state.isInfoChanged == event.changed) return;
+        emit(state.copyWith(isInfoChanged: event.changed));
       },
     );
   }

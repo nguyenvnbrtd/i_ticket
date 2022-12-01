@@ -5,6 +5,7 @@ import 'package:flutter_animation/core/src/app_colors.dart';
 import 'package:flutter_animation/core/utils/dimension.dart';
 import 'package:flutter_animation/features/user_info/blocs/user_info_bloc.dart';
 import 'package:flutter_animation/features/user_info/event/user_info_event.dart';
+import 'package:flutter_animation/features/user_info/states/user_info_state.dart';
 import 'package:flutter_animation/injector.dart';
 import 'package:flutter_animation/widgets/base_screen/origin_screen.dart';
 import 'package:flutter_animation/widgets/staless/loading_button.dart';
@@ -12,10 +13,12 @@ import 'package:flutter_animation/widgets/staless/primary_button.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../base/blocs/base_state.dart';
+import '../../../core/blocs/authentication/authentication_event.dart';
 import '../../../core/utils/utils_helper.dart';
 import '../../../models/user_info.dart';
 import '../repos/user_info_repository.dart';
 import 'components/user__info_input.dart';
+import 'components/user_divider.dart';
 import 'widgets/user_avatar.dart';
 
 class UserInfoScreen extends StatefulWidget {
@@ -46,6 +49,7 @@ class _UserInfoScreen extends State<UserInfoScreen> {
   final String address = 'Address';
   final String addressHint = 'Update your Address';
   final String save = 'Save';
+  final String logoutLabel = 'Log out';
 
   @override
   void initState() {
@@ -85,26 +89,37 @@ class _UserInfoScreen extends State<UserInfoScreen> {
                   padding: EdgeInsets.symmetric(horizontal: padding, vertical: padding / 2),
                   child: Column(
                     children: [
-                      UserInfoInput(title: name, hint: nameHint, controller: nameController),
-                      const Divider(),
-                      UserInfoInput(title: email, hint: emailHint, controller: emailController),
-                      const Divider(),
-                      UserInfoInput(title: phone, hint: phoneHint, controller: phoneController),
-                      const Divider(),
-                      UserInfoInput(title: address, hint: addressHint, controller: addressController),
-                      const Divider(),
+                      UserInfoInput(title: name, hint: nameHint, controller: nameController, onChanged: onValueChange),
+                      const UserDivider(),
+                      UserInfoInput(title: email, hint: emailHint, controller: emailController, onChanged: onValueChange),
+                      const UserDivider(),
+                      UserInfoInput(title: phone, hint: phoneHint, controller: phoneController, onChanged: onValueChange),
+                      const UserDivider(),
+                      UserInfoInput(title: address, hint: addressHint, controller: addressController, onChanged: onValueChange),
+                      const UserDivider(),
                       const SpaceVertical(),
-                      BlocBuilder<UserInfoBloc, BaseState>(
-                        buildWhen: (previous, current) => previous.isLoading != current.isLoading,
+                      BlocBuilder<UserInfoBloc, UserInfoState>(
+                        buildWhen: (previous, current) =>
+                            previous.isLoading != current.isLoading || previous.isInfoChanged != current.isInfoChanged,
                         builder: (context, state) {
-                          return LoadingButton(
-                            label: save,
-                            onPress: onSave,
-                            color: AppColors.green,
-                            isLoading: state.isLoading,
+                          return Visibility(
+                            visible: state.isInfoChanged,
+                            child: LoadingButton(
+                              label: save,
+                              onPress: onSave,
+                              color: AppColors.green,
+                              isLoading: state.isLoading,
+                            ),
                           );
                         },
                       ),
+                      PrimaryButton(
+                        onPress: logOut,
+                        label: logoutLabel,
+                        color: AppColors.white,
+                        textColor: AppColors.red,
+                        borderColor: AppColors.red,
+                      )
                     ],
                   ),
                 ),
@@ -118,12 +133,24 @@ class _UserInfoScreen extends State<UserInfoScreen> {
 
   void onSave() async {
     UtilsHelper.dismissKeyBoard();
-    userInfoBloc.add(OnSavePress(userInfo: UserInfo(
-      name: nameController.text,
-      phone: phoneController.text,
-      email: emailController.text,
-      avatar: '',
-      address: addressController.text,
-    )));
+    userInfoBloc.add(
+      OnSavePress(
+        userInfo: UserInfo(
+          name: nameController.text,
+          phone: phoneController.text,
+          email: emailController.text,
+          avatar: '',
+          address: addressController.text,
+        ),
+      ),
+    );
+  }
+
+  void logOut() {
+    context.read<AuthenticationBloc>().add(AuthenticationEventLoggingOut());
+  }
+
+  void onValueChange(String value) {
+    userInfoBloc.add(OnInfoChanged(changed: true));
   }
 }

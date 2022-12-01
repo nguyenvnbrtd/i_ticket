@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
     if (state is AuthenticationStateLoggedIn) {
       final userInfoRepository = it<UserInfoRepository>();
       await userInfoRepository.initUser(state.id);
-      UtilsHelper.popAllAndPushNamed(Routes.home);
+      UtilsHelper.popAllAndPushNamed(Routes.main);
       return;
     }
 

@@ -13,7 +13,7 @@ class UserInfoBloc extends BaseBloc<UserInfoEvent, UserInfoState> {
 
   UserInfoBloc() : super(UserInfoState.init()) {
     on<OnInitData>((event, emit) async {
-      await repository.createUserData(event.userInfo);
+      await repository.create(event.userInfo);
     });
 
     on<OnSavePress>(
@@ -21,7 +21,7 @@ class UserInfoBloc extends BaseBloc<UserInfoEvent, UserInfoState> {
         await UtilsHelper.runWithLoadingDialog(
           func: () async {
             emit(state.copyWith(isLoading: true));
-            await repository.updateUserData(userInfo: event.userInfo);
+            await repository.updateUser(data: event.userInfo);
             emit(state.copyWith(isLoading: false, isInfoChanged: false));
             Fluttertoast.showToast(msg: 'Save data success');
           },

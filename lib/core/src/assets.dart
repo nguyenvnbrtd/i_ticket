@@ -9,6 +9,7 @@ class Assets {
   static const String routeIcon = 'assets/images/route.png';
   static const String settingIcon = 'assets/images/setting.png';
   static const String userIcon = 'assets/images/user.png';
+  static const String plusCircleIcon = 'assets/images/plus_circle.png';
 
 
 }

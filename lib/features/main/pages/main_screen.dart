@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation/core/src/assets.dart';
 import 'package:flutter_animation/features/home/pages/home_screen.dart';
+import 'package:flutter_animation/features/travel_route/pages/travel_route_screen.dart';
 import 'package:flutter_animation/features/user_info/pages/user_info_screen.dart';
 import 'package:flutter_animation/widgets/base_screen/origin_screen.dart';
 import 'package:flutter_animation/widgets/stateful/custom_bottom_navigator/custom_bottom_navigator.dart';
@@ -27,7 +28,7 @@ class _MainScreen extends State<MainScreen> {
 
     screens = [
       const HomeScreen(),
-      Container(),
+      const TravelRouteScreen(),
       Container(),
       const UserInfoScreen(),
       Container(),

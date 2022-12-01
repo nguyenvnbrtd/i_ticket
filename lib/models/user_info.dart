@@ -1,9 +1,7 @@
-import 'package:equatable/equatable.dart';
-
-import '../core/network/model/response_data.dart';
+import 'package:flutter_animation/base/models/base_model.dart';
 import '../core/utils/utils_helper.dart';
 
-class UserInfo extends Equatable implements BaseResult<UserInfo> {
+class UserInfo extends BaseModel<UserInfo> {
   String? id;
   String? role;
   String? email;
@@ -29,18 +27,25 @@ class UserInfo extends Equatable implements BaseResult<UserInfo> {
     return UserInfo.fromJson(json);
   }
 
-  UserInfo copyWith({UserInfo? userInfo}) {
+  @override
+  UserInfo init() {
+    return UserInfo();
+  }
+
+  @override
+  UserInfo copyWith({UserInfo? data}) {
     return UserInfo(
-      id: userInfo?.id ?? id,
-      name: userInfo?.name ?? name,
-      phone: userInfo?.phone ?? phone,
-      email: userInfo?.email ?? email,
-      address: userInfo?.address ?? address,
-      role: userInfo?.role ?? role,
-      avatar: userInfo?.avatar ?? avatar,
+      id: data?.id ?? id,
+      name: data?.name ?? name,
+      phone: data?.phone ?? phone,
+      email: data?.email ?? email,
+      address: data?.address ?? address,
+      role: data?.role ?? role,
+      avatar: data?.avatar ?? avatar,
     );
   }
 
+  @override
   Map<String, dynamic> toJson(){
     Map<String, dynamic> map ={};
     map['id'] = id;

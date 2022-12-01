@@ -2,26 +2,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_animation/core/utils/constants.dart';
 import 'package:flutter_animation/core/utils/log_utils.dart';
 
+import '../../../base/models/base_repository.dart';
 import '../../../models/user_info.dart';
 
-class UserInfoRepository{
+class UserInfoRepository extends BaseRepository<UserInfo>{
   //user id
   UserInfo? userInfo;
 
-  UserInfoRepository();
+  UserInfoRepository() : super(Constants.USER);
 
-  // collection reference
-  final CollectionReference userCollection = FirebaseFirestore.instance.collection(Constants.USER);
-
-  Future<void> createUserData(UserInfo userInfo) async {
-    await userCollection.doc(userInfo.id).set(userInfo.toJson());
+  @override
+  Future<void> create(UserInfo data) async {
+    await collection.doc(data.id).set(data.toJson());
 
     // init the id
-    this.userInfo = userInfo;
+    userInfo = data;
   }
 
-  Future<void> initUser(String id) async {
-    final response = await userCollection.doc(id).get(const GetOptions(source: Source.serverAndCache));
+  @override
+  Future<UserInfo> getById(String id) async {
+    final response = await collection.doc(id).get(const GetOptions(source: Source.serverAndCache));
     final data = response.data();
     if(data != null){
       userInfo = UserInfo.fromJson(response.data());
@@ -30,9 +30,12 @@ class UserInfoRepository{
     }
 
     LogUtils.i(message: userInfo!.toJson().toString(), tag: 'user information');
+
+    return userInfo!;
   }
 
-  Future<void> updateUserData({required UserInfo userInfo}) async {
-    await userCollection.doc(this.userInfo?.id).set(this.userInfo?.copyWith(userInfo: userInfo).toJson());
+  Future<void> updateUser({required UserInfo data}) async {
+    await collection.doc(userInfo?.id).set(userInfo?.copyWith(data: data).toJson());
   }
+
 }

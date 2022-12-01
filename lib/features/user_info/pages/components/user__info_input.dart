@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation/core/src/app_colors.dart';
+import 'package:flutter_animation/core/utils/log_utils.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
 
 class UserInfoInput extends StatefulWidget {
@@ -65,10 +66,11 @@ class _UserInfoInputState extends State<UserInfoInput> {
         hasData = false;
       });
     } else {
-      if (hasData) return;
-      setState(() {
-        hasData = true;
-      });
+      if (!hasData) {
+        setState(() {
+          hasData = true;
+        });
+      }
     }
     if (widget.onChanged != null) widget.onChanged!(value);
   }

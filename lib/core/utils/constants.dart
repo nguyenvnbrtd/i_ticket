@@ -28,10 +28,12 @@ class Constants {
   static final AES_KEY = Key.fromUtf8('Md5Pz94WwlVdF0vHMaqd3IAfKEjnIdfz');
   static final AES_INITIALIZATION_VECTOR = IV.fromUtf8('484E6248C68E8283');
 
-  static const DATE_TIME_FORMAT = 'dd-MM-yyyy hh:mm:ss';
-  static const TIME_FORMAT = 'hh:mm:ss';
+  static const DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss';
+  static const TIME_FORMAT = 'HH:mm:ss';
+  static const HOUR_MINUTES_FORMAT = 'HH:mm';
 
   /// firebase key
 
   static const USER = 'user';
+  static const TRAVEL_ROUTE = 'travel_route';
 }

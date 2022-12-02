@@ -9,7 +9,7 @@ class UserInfoRepository extends BaseRepository<UserInfo>{
   //user id
   UserInfo? userInfo;
 
-  UserInfoRepository() : super(Constants.USER);
+  UserInfoRepository() : super(Constants.USER, UserInfo());
 
   @override
   Future<void> create(UserInfo data) async {
@@ -37,5 +37,4 @@ class UserInfoRepository extends BaseRepository<UserInfo>{
   Future<void> updateUser({required UserInfo data}) async {
     await collection.doc(userInfo?.id).set(userInfo?.copyWith(data: data).toJson());
   }
-
 }

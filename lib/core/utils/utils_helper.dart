@@ -168,18 +168,6 @@ class UtilsHelper {
     }
   }
 
-  static String getCurrentDateTime() {
-    final time = DateTime.now();
-    DateFormat format = DateFormat(Constants.DATE_TIME_FORMAT);
-    return format.format(time);
-  }
-
-  static String getCurrentTime() {
-    final time = DateTime.now();
-    DateFormat format = DateFormat(Constants.TIME_FORMAT);
-    return format.format(time);
-  }
-
   static void dismissKeyBoard() {
     FocusManager.instance.primaryFocus?.unfocus();
   }
@@ -218,5 +206,69 @@ class UtilsHelper {
 
   static void logout() {
     navigatorKey.currentContext!.read<AuthenticationBloc>().add(AuthenticationEventLoggingOut());
+  }
+
+  static String formatTime(DateTime date){
+    DateFormat format = DateFormat(Constants.DATE_TIME_FORMAT);
+    return format.format(date);
+  }
+
+  static String getCurrentDateTime() {
+    final time = DateTime.now();
+    DateFormat format = DateFormat(Constants.DATE_TIME_FORMAT);
+    return format.format(time);
+  }
+
+  static String getCurrentTime() {
+    final time = DateTime.now();
+    DateFormat format = DateFormat(Constants.TIME_FORMAT);
+    return format.format(time);
+  }
+
+  static String getTimeFromString(String date) {
+    try{
+      DateFormat format = DateFormat(Constants.HOUR_MINUTES_FORMAT);
+      DateTime time = DateFormat(Constants.DATE_TIME_FORMAT).parse(date);
+      return format.format(time);
+    }catch(e){
+      return 'none';
+    }
+  }
+
+  // minute
+  static int getDiffFromTwo(String h1, String h2){
+    try{
+      DateTime hour1 = DateFormat(Constants.DATE_TIME_FORMAT).parse(h1);
+      DateTime hour2 = DateFormat(Constants.DATE_TIME_FORMAT).parse(h2);
+
+      return hour1.difference(hour2).inMinutes;
+    }catch(e){
+      return 0;
+    }
+  }
+
+  static String getDiffHoursFromTwo(String h1, String h2){
+    try{
+      String result = '';
+      final diff = getDiffFromTwo(h1, h2).abs();
+
+      if(diff ~/ (60 * 24) >= 1){
+        final day = diff ~/ (60 * 24);
+        result += '$day day${day > 1 ? 's' : ''} ';
+      }
+      if(diff ~/ 60 >= 1){
+        final hour = diff % (60 * 24);
+        final hourRemain = hour ~/ 60;
+        result += '$hourRemain hour${hourRemain > 1 ? 's' : ''} ';
+      }
+      if(diff % 60 > 0){
+        final minute = diff % 60;
+        result += '$minute minutes';
+      }
+
+      return result;
+    }catch(e){
+      return '0 hour';
+    }
   }
 }

@@ -10,6 +10,10 @@ class Assets {
   static const String settingIcon = 'assets/images/setting.png';
   static const String userIcon = 'assets/images/user.png';
   static const String plusCircleIcon = 'assets/images/plus_circle.png';
+  static const String departureCircleIcon = 'assets/images/departure_circle.png';
+  static const String destinationCircleIcon = 'assets/images/destination_circle.png';
+  static const String editIcon = 'assets/images/edit.png';
+  static const String trashIcon = 'assets/images/trash.png';
 
 
 }

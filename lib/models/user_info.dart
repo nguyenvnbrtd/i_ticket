@@ -2,7 +2,6 @@ import 'package:flutter_animation/base/models/base_model.dart';
 import '../core/utils/utils_helper.dart';
 
 class UserInfo extends BaseModel<UserInfo> {
-  String? id;
   String? role;
   String? email;
   String? avatar;
@@ -10,7 +9,7 @@ class UserInfo extends BaseModel<UserInfo> {
   String? phone;
   String? address;
 
-  UserInfo({this.id , this.role, this.email, this.avatar, this.name, this.phone, this.address});
+  UserInfo({String? id, this.role, this.email, this.avatar, this.name, this.phone, this.address}) : super(id: id);
 
   UserInfo.fromJson(dynamic json) {
     id = UtilsHelper.getJsonValueString(json, ['id']);

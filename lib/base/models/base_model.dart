@@ -1,9 +1,11 @@
 import 'package:equatable/equatable.dart';
 
 abstract class BaseModel<T> extends Equatable{
-  const BaseModel();
+  String? id;
 
-  T fromJson(json);
+  BaseModel({this.id});
+
+  T fromJson(dynamic json);
 
   T init();
 

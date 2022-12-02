@@ -4,23 +4,24 @@ import 'package:flutter_animation/base/models/base_model.dart';
 import '../../../core/utils/utils_helper.dart';
 
 class TravelRoute extends BaseModel<TravelRoute> {
-  String? id;
   String? name;
   String? departureName;
   String? destinationName;
   String? departureTime;
   String? destinationTime;
   String? licensePlate;
+  String? distance; // km
 
   TravelRoute({
-    this.id,
+    String? id,
     this.name,
     this.departureName,
     this.destinationName,
     this.departureTime,
     this.destinationTime,
     this.licensePlate,
-  });
+    this.distance,
+  }): super(id: id);
 
   TravelRoute.fromJson(dynamic json) {
     id = UtilsHelper.getJsonValueString(json, ['id']);
@@ -30,10 +31,11 @@ class TravelRoute extends BaseModel<TravelRoute> {
     departureTime = UtilsHelper.getJsonValueString(json, ['departureTime']);
     destinationTime = UtilsHelper.getJsonValueString(json, ['destinationTime']);
     licensePlate = UtilsHelper.getJsonValueString(json, ['licensePlate']);
+    distance = UtilsHelper.getJsonValueString(json, ['distance']);
   }
 
   @override
-  TravelRoute fromJson(json) {
+  TravelRoute fromJson(dynamic json) {
     return TravelRoute.fromJson(json);
   }
 
@@ -52,6 +54,7 @@ class TravelRoute extends BaseModel<TravelRoute> {
       departureTime: data?.departureTime ?? departureTime,
       destinationTime: data?.destinationTime ?? destinationTime,
       licensePlate: data?.licensePlate ?? licensePlate,
+      distance: data?.distance ?? distance,
     );
   }
 
@@ -65,6 +68,7 @@ class TravelRoute extends BaseModel<TravelRoute> {
     map['departureTime'] = departureTime;
     map['destinationTime'] = destinationTime;
     map['licensePlate'] = licensePlate;
+    map['distance'] = distance;
     return map;
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter_animation/base/blocs/base_bloc.dart';
 import 'package:flutter_animation/base/blocs/base_state.dart';
+import 'package:flutter_animation/core/utils/dialog_utils.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/features/travel_route/event/travel_route_event.dart';
 import 'package:flutter_animation/features/travel_route/repos/travel_route_repository.dart';
@@ -27,5 +28,17 @@ class TravelRouteBloc extends BaseBloc<TravelRouteEvent, BaseState> {
         },
       );
     });
+
+    on<OnDeleteRoute>((event, emit) async {
+      await UtilsHelper.runWithLoadingDialog(
+        func: () async {
+          await _repository.delete(id: event.id);
+          DialogUtils.showToast('Delete route success!');
+        },
+        onFailed: (e) {
+          DialogUtils.showToast('Cannot delete route!');
+        },
+      );
+    },);
   }
 }

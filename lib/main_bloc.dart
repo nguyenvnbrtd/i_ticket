@@ -2,6 +2,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
+import 'core/utils/dialog_utils.dart';
 import 'core/utils/error_handler.dart';
 import 'core/utils/gps_handler.dart';
 import 'core/utils/intenret_handler.dart';
@@ -41,7 +42,7 @@ class MainBloc implements OnInternetStatusChangeListener, OnGPSStatusChangeListe
 
   @override
   void onCatchingError(Object error) {
-    Fluttertoast.showToast(msg: error.toString());
+    DialogUtils.showToast(error.toString());
   }
 
 

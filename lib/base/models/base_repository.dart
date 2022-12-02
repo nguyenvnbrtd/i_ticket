@@ -28,6 +28,10 @@ class BaseRepository<T extends BaseModel>{
     await collection.doc(id).set(data.toJson());
   }
 
+  Future<void> delete({required String id}) async {
+    await collection.doc(id).delete();
+  }
+
   Stream<List<T>> get getAll {
     return collection.snapshots().map(_convert);
   }

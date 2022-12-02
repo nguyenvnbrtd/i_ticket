@@ -17,6 +17,7 @@ import '../../injector.dart';
 import '../../route/page_routes.dart';
 import 'constants.dart';
 import 'device_info.dart';
+import 'dialog_utils.dart';
 import 'error_handler.dart';
 
 class UtilsHelper {
@@ -147,7 +148,7 @@ class UtilsHelper {
   static void showError(Object e) {
     final String error = UtilsHelper.getErrorMessage(e);
     if (error.isNotEmpty) {
-      Fluttertoast.showToast(msg: error);
+      DialogUtils.showToast(error);
     }
   }
 

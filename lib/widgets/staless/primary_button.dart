@@ -12,6 +12,7 @@ class PrimaryButton extends StatelessWidget {
     this.textColor = Colors.white,
     this.borderColor = Colors.white,
     this.height = 45,
+    this.width,
     this.child,
   }) : super(key: key);
 
@@ -21,6 +22,7 @@ class PrimaryButton extends StatelessWidget {
   final VoidCallback onPress;
   final Color color;
   final double height;
+  final double? width;
   final Widget? child;
 
   @override
@@ -33,6 +35,7 @@ class PrimaryButton extends StatelessWidget {
         onTap: onPress,
         child: Container(
           height: height,
+          width: width,
           clipBehavior: Clip.hardEdge,
           padding: const EdgeInsets.all(edgSize),
           decoration: BoxDecoration(

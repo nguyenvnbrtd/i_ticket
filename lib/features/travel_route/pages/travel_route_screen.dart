@@ -8,6 +8,7 @@ import 'package:flutter_animation/widgets/staless/spacer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../../core/utils/dialog_utils.dart';
 import '../../../core/utils/unique_id_generator.dart';
 import '../../../widgets/staless/main_label.dart';
 import '../blocs/travel_route_bloc.dart';
@@ -82,6 +83,6 @@ class _TravelRouteScreen extends State<TravelRouteScreen> {
 
   void onAddRoute() {
     travelRouteBloc.add(OnAddNewRoute(route: TravelRoute(id: UniqueIdGenerator.uniqueId)));
-    Fluttertoast.showToast(msg: 'Add success');
+    DialogUtils.showToast('Add success');
   }
 }

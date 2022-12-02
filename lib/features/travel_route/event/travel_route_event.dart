@@ -11,3 +11,12 @@ class OnAddNewRoute extends TravelRouteEvent{
   @override
   List<Object?> get props => [route];
 }
+
+class OnDeleteRoute extends TravelRouteEvent{
+  final String id;
+
+  OnDeleteRoute({required this.id});
+
+  @override
+  List<Object?> get props => [id];
+}

@@ -4,6 +4,7 @@ import 'package:flutter_animation/features/user_info/event/user_info_event.dart'
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../base/blocs/base_bloc.dart';
+import '../../../core/utils/dialog_utils.dart';
 import '../../../injector.dart';
 import '../repos/user_info_repository.dart';
 import '../states/user_info_state.dart';
@@ -23,7 +24,7 @@ class UserInfoBloc extends BaseBloc<UserInfoEvent, UserInfoState> {
             emit(state.copyWith(isLoading: true));
             await repository.updateUser(data: event.userInfo);
             emit(state.copyWith(isLoading: false, isInfoChanged: false));
-            Fluttertoast.showToast(msg: 'Save data success');
+            DialogUtils.showToast('Save data success');
           },
           onFailed: (e) {
             emit(state.copyWith(isLoading: false));

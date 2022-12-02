@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_animation/core/utils/log_utils.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/repos/user_repository.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../base/blocs/base_bloc.dart';
+import '../../../core/utils/dialog_utils.dart';
 import '../../../injector.dart';
 import '../event/login_event.dart';
 import '../states/login_state.dart';
@@ -29,10 +27,10 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
         UtilsHelper.login(value.user!.uid);
       }).onError((error, stackTrace) {
         if (error is FirebaseException) {
-          Fluttertoast.showToast(msg: error.message ?? error.toString());
+          DialogUtils.showToast(error.message ?? error.toString());
           return;
         }
-        Fluttertoast.showToast(msg: error.toString());
+        DialogUtils.showToast(error.toString());
       });
 
       emit(state.copyWith(isLoading: false));

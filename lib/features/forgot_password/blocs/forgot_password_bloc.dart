@@ -1,11 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_animation/core/utils/log_utils.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/repos/user_repository.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../base/blocs/base_bloc.dart';
+import '../../../core/utils/dialog_utils.dart';
 import '../../../injector.dart';
 import '../event/forgot_password_event.dart';
 import '../states/forgot_password_state.dart';
@@ -22,7 +19,7 @@ class ForgotPasswordBloc extends BaseBloc<ForgotPasswordEvent, ForgotPasswordSta
           if (event.email.isEmpty) throw 'Email cannot be empty!';
 
           await _userRepository.sendResetCode(event.email);
-          Fluttertoast.showToast(msg: 'The reset password has been sent to your email');
+          DialogUtils.showToast('The reset password has been sent to your email');
           emit(state.copyWith(isLoading: false));
 
           UtilsHelper.popToLogin();

@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation/core/src/app_colors.dart';
 import 'package:flutter_animation/core/src/assets.dart';
+import 'package:flutter_animation/core/utils/dialog_utils.dart';
 import 'package:flutter_animation/core/utils/dimension.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
+import 'package:flutter_animation/features/travel_route/blocs/travel_route_bloc.dart';
+import 'package:flutter_animation/features/travel_route/event/travel_route_event.dart';
 import 'package:flutter_animation/features/travel_route/models/travle_route.dart';
 import 'package:flutter_animation/widgets/staless/base_tab_widget.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TravelRouteItem extends StatelessWidget {
   final TravelRoute item;
 
   const TravelRouteItem({Key? key, required this.item}) : super(key: key);
+
+  final deleteAlert = 'Delete route';
+  final deleteMessage = 'Do you want to delete it?';
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +75,7 @@ class TravelRouteItem extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: paddingSize / 1.5, vertical: paddingSize / 3),
                   decoration: BoxDecoration(color: AppColors.lightGrey, borderRadius: BorderRadius.circular(paddingSize)),
-                  child: Text(
-                    license,
-                    style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.grey),
-                  ),
+                  child: Text(license, style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.grey)),
                 ),
                 SpaceVertical(height: paddingSize / 2),
                 Stack(
@@ -93,8 +97,10 @@ class TravelRouteItem extends StatelessWidget {
                         Row(
                           children: [
                             SizedBox(width: iconSize + paddingSize / 2),
-                            Text(routeStatus,
-                                style: theme.textTheme.bodySmall?.copyWith(color: AppColors.grey, fontSize: 12)),
+                            Text(
+                              routeStatus,
+                              style: theme.textTheme.bodySmall?.copyWith(color: AppColors.grey, fontSize: 12),
+                            ),
                           ],
                         ),
                         SpaceVertical(height: paddingSize),
@@ -142,7 +148,7 @@ class TravelRouteItem extends StatelessWidget {
                   SpaceHorizontal(width: paddingSize / 2),
                   BaseTabWidget(
                     child: Image.asset(Assets.trashIcon, height: iconSize, fit: BoxFit.contain),
-                    onTap: onDelete,
+                    onTap: () => onDelete(context),
                   )
                 ],
               ),
@@ -157,7 +163,18 @@ class TravelRouteItem extends StatelessWidget {
 
   void onEdit() {}
 
-  void onDelete() {}
+  void onDelete(BuildContext context) {
+    DialogUtils.showPrimaryDialog(
+      barrierDismissible: true,
+      closeWhenAction: true,
+      label: deleteAlert,
+      message: deleteMessage,
+      onCancel: (){},
+      onConfirm: (){
+        context.read<TravelRouteBloc>().add(OnDeleteRoute(id: item.id!));
+      }
+    );
+  }
 }
 
 class TravelRouteDot extends StatelessWidget {

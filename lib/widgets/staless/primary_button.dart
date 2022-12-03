@@ -13,6 +13,7 @@ class PrimaryButton extends StatelessWidget {
     this.borderColor = Colors.white,
     this.height = 45,
     this.width,
+    this.borderWidth = 1,
     this.child,
   }) : super(key: key);
 
@@ -23,6 +24,7 @@ class PrimaryButton extends StatelessWidget {
   final Color color;
   final double height;
   final double? width;
+  final double borderWidth;
   final Widget? child;
 
   @override
@@ -40,7 +42,7 @@ class PrimaryButton extends StatelessWidget {
           padding: const EdgeInsets.all(edgSize),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(edgSize),
-            border: Border.all(color: borderColor, width: 1),
+            border: Border.all(color: borderColor, width: borderWidth),
           ),
           child: Center(
             child: child ??

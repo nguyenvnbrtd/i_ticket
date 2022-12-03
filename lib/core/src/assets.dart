@@ -14,6 +14,7 @@ class Assets {
   static const String destinationCircleIcon = 'assets/images/destination_circle.png';
   static const String editIcon = 'assets/images/edit.png';
   static const String trashIcon = 'assets/images/trash.png';
+  static const String backIcon = 'assets/images/back.png';
 
 
 }

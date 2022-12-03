@@ -8,6 +8,7 @@ import 'package:flutter_animation/models/user_info_initial_argument.dart';
 
 import '../features/register/pages/register_screen.dart';
 import '../features/splash/pages/splash_screen.dart';
+import '../features/travel_route/pages/add_travel_route_screen.dart';
 import '../features/user_info/pages/user_info_screen.dart';
 import '../models/arguments_screen_model.dart';
 
@@ -23,6 +24,7 @@ class Routes {
   static const String home = '/home';
   static const String userInfo = '/user_info';
   static const String userInfoInitial = '/user_info_initial';
+  static const String addTravelRoute = '/add_travel_route';
 
   static String _current = splash;
 
@@ -76,6 +78,12 @@ class Routes {
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: userInfoInitial),
           widget: UserInfoInitialScreen(uid: arg.uid, email: arg.email),
+        );
+      case addTravelRoute:
+        // final arg = arguments.data as UserInfoInitialArgument;
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: addTravelRoute),
+          widget: const AddTravelRouteScreen(),
         );
 
       default:

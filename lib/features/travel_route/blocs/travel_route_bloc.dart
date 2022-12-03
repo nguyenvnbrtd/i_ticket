@@ -9,22 +9,23 @@ import '../../../injector.dart';
 import '../../../models/user_info_initial_argument.dart';
 import '../../../route/page_routes.dart';
 import '../models/travle_route.dart';
+import '../states/travel_route_state.dart';
 
-class TravelRouteBloc extends BaseBloc<TravelRouteEvent, BaseState> {
+class TravelRouteBloc extends BaseBloc<TravelRouteEvent, TravelRouteState> {
   final TravelRouteRepository _repository = it<TravelRouteRepository>();
 
   Stream<List<TravelRoute>> get routes => _repository.getAll;
 
-  TravelRouteBloc() : super(const BaseState()) {
+  TravelRouteBloc() : super(TravelRouteState.init()) {
     on<OnAddNewRoute>((event, emit) async {
       await UtilsHelper.runWithLoadingDialog(
         func: () async {
-          emit(const BaseState(isLoading: true));
+          emit(state.copyWith(isLoading: true));
           await _repository.create(event.route);
-          emit(const BaseState(isLoading: false));
+          emit(state.copyWith(isLoading: false));
         },
         onFailed: (e) {
-          emit(const BaseState(isLoading: false));
+          emit(state.copyWith(isLoading: false));
         },
       );
     });
@@ -39,6 +40,13 @@ class TravelRouteBloc extends BaseBloc<TravelRouteEvent, BaseState> {
           DialogUtils.showToast('Cannot delete route!');
         },
       );
+    },);
+
+    on<OnChangeDepartureTime>((event, emit) async {
+      emit(state.copyWith(departureTime: event.time.toString()));
+    },);
+    on<OnChangeDestinationTime>((event, emit) async {
+      emit(state.copyWith(destinationTime: event.time.toString()));
     },);
   }
 }

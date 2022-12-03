@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation/core/src/assets.dart';
 import 'package:flutter_animation/core/utils/dimension.dart';
+import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/features/travel_route/event/travel_route_event.dart';
 import 'package:flutter_animation/features/travel_route/models/travle_route.dart';
+import 'package:flutter_animation/route/page_routes.dart';
 import 'package:flutter_animation/widgets/base_screen/origin_screen.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -82,7 +84,6 @@ class _TravelRouteScreen extends State<TravelRouteScreen> {
   }
 
   void onAddRoute() {
-    travelRouteBloc.add(OnAddNewRoute(route: TravelRoute(id: UniqueIdGenerator.uniqueId)));
-    DialogUtils.showToast('Add success');
+    UtilsHelper.pushNamed(Routes.addTravelRoute);
   }
 }

@@ -60,14 +60,18 @@ class TravelRouteItem extends StatelessWidget {
                     Expanded(
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Text(name, style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w500)),
+                        child: Text(
+                          name,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                          style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w500),
+                        ),
                       ),
                     ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(travelTime, style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w500)),
-                      ),
+                    const SpaceHorizontal(),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(travelTime, style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w500)),
                     ),
                   ],
                 ),
@@ -165,15 +169,14 @@ class TravelRouteItem extends StatelessWidget {
 
   void onDelete(BuildContext context) {
     DialogUtils.showPrimaryDialog(
-      barrierDismissible: true,
-      closeWhenAction: true,
-      label: deleteAlert,
-      message: deleteMessage,
-      onCancel: (){},
-      onConfirm: (){
-        context.read<TravelRouteBloc>().add(OnDeleteRoute(id: item.id!));
-      }
-    );
+        barrierDismissible: true,
+        closeWhenAction: true,
+        label: deleteAlert,
+        message: deleteMessage,
+        onCancel: () {},
+        onConfirm: () {
+          context.read<TravelRouteBloc>().add(OnDeleteRoute(id: item.id!));
+        });
   }
 }
 

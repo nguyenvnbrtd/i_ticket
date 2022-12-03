@@ -20,3 +20,21 @@ class OnDeleteRoute extends TravelRouteEvent{
   @override
   List<Object?> get props => [id];
 }
+
+class OnChangeDepartureTime extends TravelRouteEvent{
+  final DateTime time;
+
+  OnChangeDepartureTime({required this.time});
+
+  @override
+  List<Object?> get props => [time];
+}
+
+class OnChangeDestinationTime extends TravelRouteEvent{
+  final DateTime time;
+
+  OnChangeDestinationTime({required this.time});
+
+  @override
+  List<Object?> get props => [time];
+}

@@ -7,9 +7,12 @@ import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/features/travel_route/blocs/travel_route_bloc.dart';
 import 'package:flutter_animation/features/travel_route/event/travel_route_event.dart';
 import 'package:flutter_animation/features/travel_route/models/travle_route.dart';
+import 'package:flutter_animation/route/page_routes.dart';
 import 'package:flutter_animation/widgets/staless/base_tab_widget.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../models/travel_route_argument.dart';
 
 class TravelRouteItem extends StatelessWidget {
   final TravelRoute item;
@@ -165,7 +168,9 @@ class TravelRouteItem extends StatelessWidget {
 
   void onTab() {}
 
-  void onEdit() {}
+  void onEdit() {
+    UtilsHelper.pushNamed(Routes.addTravelRoute, TravelRouteArgument(item.id ?? ''));
+  }
 
   void onDelete(BuildContext context) {
     DialogUtils.showPrimaryDialog(

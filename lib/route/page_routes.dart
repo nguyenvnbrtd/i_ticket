@@ -11,6 +11,7 @@ import '../features/splash/pages/splash_screen.dart';
 import '../features/travel_route/pages/add_travel_route_screen.dart';
 import '../features/user_info/pages/user_info_screen.dart';
 import '../models/arguments_screen_model.dart';
+import '../models/travel_route_argument.dart';
 
 class Routes {
 
@@ -80,10 +81,10 @@ class Routes {
           widget: UserInfoInitialScreen(uid: arg.uid, email: arg.email),
         );
       case addTravelRoute:
-        // final arg = arguments.data as UserInfoInitialArgument;
+        final arg = (arguments.data != null) ? arguments.data as TravelRouteArgument : TravelRouteArgument('');
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: addTravelRoute),
-          widget: const AddTravelRouteScreen(),
+          widget: AddTravelRouteScreen(id: arg.id),
         );
 
       default:

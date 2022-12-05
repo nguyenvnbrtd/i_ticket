@@ -25,7 +25,7 @@ class BaseRepository<T extends BaseModel>{
   }
 
   Future<void> update({required String id, required T data}) async {
-    await collection.doc(id).set(data.toJson());
+    await collection.doc(id).update(data.toJson());
   }
 
   Future<void> delete({required String id}) async {

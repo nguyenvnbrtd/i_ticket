@@ -1,27 +1,28 @@
 import 'package:flutter_animation/base/blocs/base_state.dart';
+import 'package:flutter_animation/features/travel_route/models/travle_route.dart';
 
 class TravelRouteState extends BaseState {
-  final String departureTime;
-  final String destinationTime;
+  final TravelRoute route;
+  final bool isInitData;
 
-  const TravelRouteState({required bool isLoading, required this.departureTime, required this.destinationTime}) : super(isLoading: isLoading);
+  const TravelRouteState({required bool isLoading, required this.isInitData, required this.route}) : super(isLoading: isLoading);
 
   factory TravelRouteState.init() {
-    return const TravelRouteState(
+    return TravelRouteState(
       isLoading: false,
-      departureTime: '',
-      destinationTime: '',
+      isInitData: false,
+      route: TravelRoute(),
     );
   }
 
-  TravelRouteState copyWith({bool? isLoading, String? departureTime, String? destinationTime}) {
+  TravelRouteState copyWith({bool? isLoading, bool? isInitData, TravelRoute? route}) {
     return TravelRouteState(
       isLoading: isLoading ?? this.isLoading,
-      departureTime: departureTime ?? this.departureTime,
-      destinationTime: destinationTime ?? this.destinationTime,
+      isInitData: isInitData ?? this.isInitData,
+      route: this.route.copyWith(data: route),
     );
   }
 
   @override
-  List<Object?> get props => [isLoading, departureTime, destinationTime];
+  List<Object?> get props => [isLoading, isInitData, route];
 }

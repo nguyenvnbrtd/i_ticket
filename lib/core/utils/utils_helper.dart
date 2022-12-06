@@ -128,7 +128,7 @@ class UtilsHelper {
 
   /// when using it in a bloc and call a emit in function
   /// you must to await
-  static Future<void> runWithLoadingDialog(
+  static Future<void> runInGuardZone(
       {required Function func, Function(Object e)? onFailed, bool isShowProgress = false, bool showLoading = true}) async {
     try {
       // DialogUtils.showLoadingDialog(isShowProgress: isShowProgress);
@@ -214,6 +214,11 @@ class UtilsHelper {
     return format.format(date);
   }
 
+  static String formatDate(DateTime date){
+    DateFormat format = DateFormat(Constants.DATE_FORMAT);
+    return format.format(date);
+  }
+
   static String getCurrentDateTime() {
     final time = DateTime.now();
     DateFormat format = DateFormat(Constants.DATE_TIME_FORMAT);
@@ -229,6 +234,16 @@ class UtilsHelper {
   static String getTimeFromString(String date) {
     try{
       DateFormat format = DateFormat(Constants.HOUR_MINUTES_FORMAT);
+      DateTime time = DateFormat(Constants.DATE_TIME_FORMAT).parse(date);
+      return format.format(time);
+    }catch(e){
+      return 'none';
+    }
+  }
+
+  static String getDateFromString(String date) {
+    try{
+      DateFormat format = DateFormat(Constants.DATE_FORMAT);
       DateTime time = DateFormat(Constants.DATE_TIME_FORMAT).parse(date);
       return format.format(time);
     }catch(e){
@@ -271,5 +286,23 @@ class UtilsHelper {
     }catch(e){
       return '0 hour';
     }
+  }
+
+  // copy the element of target where it not empty
+  static List<T> copyElementList<T>({required List<T> defaultList, required List<T> targetList, required T emptyValue}){
+    List<T> result = [];
+    for(int i = 0; i < defaultList.length ; i++){
+      if(targetList.length <= i){
+        result.add(defaultList[i]);
+        continue;
+      }
+      final item = targetList[i];
+      if(item != emptyValue){
+        result.add(item);
+      }else{
+        result.add(defaultList[i]);
+      }
+    }
+    return result;
   }
 }

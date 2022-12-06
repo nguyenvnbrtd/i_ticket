@@ -15,7 +15,7 @@ class TravelRouteBloc extends BaseBloc<TravelRouteEvent, TravelRouteState> {
 
   TravelRouteBloc() : super(TravelRouteState.init()) {
     on<OnInitRoute>((event, emit) async {
-      await UtilsHelper.runWithLoadingDialog(
+      await UtilsHelper.runInGuardZone(
         func: () async {
           emit(state.copyWith(isInitData: true));
           final data = await _repository.getById(event.id);
@@ -28,7 +28,7 @@ class TravelRouteBloc extends BaseBloc<TravelRouteEvent, TravelRouteState> {
     });
 
     on<OnAddNewRoute>((event, emit) async {
-      await UtilsHelper.runWithLoadingDialog(
+      await UtilsHelper.runInGuardZone(
         func: () async {
           emit(state.copyWith(isLoading: true));
           await _repository.create(state.route.copyWith(data: event.route));
@@ -43,7 +43,7 @@ class TravelRouteBloc extends BaseBloc<TravelRouteEvent, TravelRouteState> {
     });
 
     on<OnUpdateRoute>((event, emit) async {
-      await UtilsHelper.runWithLoadingDialog(
+      await UtilsHelper.runInGuardZone(
         func: () async {
           emit(state.copyWith(isLoading: true));
           await _repository.update(id: event.id, data: state.route.copyWith(data: event.route));
@@ -57,7 +57,7 @@ class TravelRouteBloc extends BaseBloc<TravelRouteEvent, TravelRouteState> {
     });
 
     on<OnDeleteRoute>((event, emit) async {
-      await UtilsHelper.runWithLoadingDialog(
+      await UtilsHelper.runInGuardZone(
         func: () async {
           await _repository.delete(id: event.id);
           DialogUtils.showToast('Delete route success!');

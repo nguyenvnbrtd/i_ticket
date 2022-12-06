@@ -12,7 +12,7 @@ class ForgotPasswordBloc extends BaseBloc<ForgotPasswordEvent, ForgotPasswordSta
 
   ForgotPasswordBloc() : super(ForgotPasswordState.init()) {
     on<OnForgotPasswordPress>((event, emit) async {
-      await UtilsHelper.runWithLoadingDialog(
+      await UtilsHelper.runInGuardZone(
         func: () async {
           emit(state.copyWith(isLoading: true));
 

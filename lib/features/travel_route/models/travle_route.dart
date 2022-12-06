@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_animation/base/models/base_model.dart';
+import 'package:flutter_animation/core/utils/constants.dart';
 
 import '../../../core/utils/utils_helper.dart';
 
@@ -11,6 +12,7 @@ class TravelRoute extends BaseModel<TravelRoute> {
   String? destinationTime;
   String? licensePlate;
   String? distance; // km
+  List<String>? seats; // km
 
   TravelRoute({
     String? id,
@@ -21,6 +23,7 @@ class TravelRoute extends BaseModel<TravelRoute> {
     this.destinationTime,
     this.licensePlate,
     this.distance,
+    this.seats = Constants.defaultSeats,
   }): super(id: id);
 
   TravelRoute.fromJson(dynamic json) {
@@ -32,6 +35,11 @@ class TravelRoute extends BaseModel<TravelRoute> {
     destinationTime = UtilsHelper.getJsonValueString(json, ['destinationTime']);
     licensePlate = UtilsHelper.getJsonValueString(json, ['licensePlate']);
     distance = UtilsHelper.getJsonValueString(json, ['distance']);
+    try{
+      seats = List<String>.from(json["seats"].map((x) => x));
+    }catch(e){
+      seats = Constants.defaultSeats;
+    }
   }
 
   @override
@@ -55,6 +63,7 @@ class TravelRoute extends BaseModel<TravelRoute> {
       destinationTime: data?.destinationTime ?? destinationTime,
       licensePlate: data?.licensePlate ?? licensePlate,
       distance: data?.distance ?? distance,
+      seats: UtilsHelper.copyElementList<String>(defaultList: seats ?? Constants.defaultSeats, targetList: data?.seats ?? [], emptyValue: ''),
     );
   }
 
@@ -69,9 +78,10 @@ class TravelRoute extends BaseModel<TravelRoute> {
     map['destinationTime'] = destinationTime;
     map['licensePlate'] = licensePlate;
     map['distance'] = distance;
+    map['seats'] = seats;
     return map;
   }
 
   @override
-  List<Object?> get props => [id, name, departureName, destinationName, departureTime, destinationTime, licensePlate];
+  List<Object?> get props => [id, name, departureName, destinationName, departureTime, destinationTime, licensePlate, seats];
 }

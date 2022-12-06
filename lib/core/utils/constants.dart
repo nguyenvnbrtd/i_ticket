@@ -29,6 +29,7 @@ class Constants {
   static final AES_INITIALIZATION_VECTOR = IV.fromUtf8('484E6248C68E8283');
 
   static const DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss';
+  static const DATE_FORMAT = 'dd-MM-yyyy';
   static const TIME_FORMAT = 'HH:mm:ss';
   static const HOUR_MINUTES_FORMAT = 'HH:mm';
 
@@ -36,4 +37,15 @@ class Constants {
 
   static const USER = 'user';
   static const TRAVEL_ROUTE = 'travel_route';
+
+  /// seats
+  /// List<String>.generate(24, (index) => '');
+  static const defaultSeats = [
+    '', '', '', '',
+    '', '', '', '',
+    '', '', '', '',
+    '', '', '', '',
+    '', '', '', '',
+    '', '', '', '',
+  ];
 }

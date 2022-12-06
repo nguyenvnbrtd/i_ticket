@@ -2,30 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animation/core/src/assets.dart';
 import 'package:flutter_animation/core/utils/dimension.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
-import 'package:flutter_animation/features/travel_route/event/travel_route_event.dart';
 import 'package:flutter_animation/features/travel_route/models/travle_route.dart';
 import 'package:flutter_animation/route/page_routes.dart';
 import 'package:flutter_animation/widgets/base_screen/origin_screen.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../core/utils/dialog_utils.dart';
-import '../../../core/utils/unique_id_generator.dart';
 import '../../../widgets/staless/main_label.dart';
 import '../blocs/travel_route_bloc.dart';
 import 'components/travel_route_item.dart';
+import 'widgets/seats_status.dart';
 
 class TravelRouteScreen extends StatefulWidget {
   const TravelRouteScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _TravelRouteScreen();
+  State<StatefulWidget> createState() => TravelRouteScreenState();
 }
 
-class _TravelRouteScreen extends State<TravelRouteScreen> {
-  final routeManagement = 'Route Management';
+class TravelRouteScreenState extends State<TravelRouteScreen> {
   late final TravelRouteBloc travelRouteBloc;
+
+  String get title => 'Route Management';
 
   @override
   void initState() {
@@ -42,15 +41,12 @@ class _TravelRouteScreen extends State<TravelRouteScreen> {
       child: OriginScreen(
         child: Column(
           children: [
-            SpaceVertical(height: paddingSize,),
+            SpaceVertical(
+              height: paddingSize,
+            ),
             Padding(
               padding: EdgeInsets.all(paddingSize),
-              child: MainLabel(
-                label: routeManagement,
-                alignment: MainAxisAlignment.spaceBetween,
-                rightIcon: Assets.plusCircleIcon,
-                rightAction: onAddRoute,
-              ),
+              child: buildHeader(),
             ),
             Expanded(
               child: Container(
@@ -70,7 +66,7 @@ class _TravelRouteScreen extends State<TravelRouteScreen> {
                       },
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return TravelRouteItem(item: data[index],);
+                        return buildItem(data[index]);
                       },
                     );
                   },
@@ -85,5 +81,34 @@ class _TravelRouteScreen extends State<TravelRouteScreen> {
 
   void onAddRoute() {
     UtilsHelper.pushNamed(Routes.addTravelRoute);
+  }
+
+  Widget buildHeader() {
+    return MainLabel(
+      label: title,
+      alignment: MainAxisAlignment.spaceBetween,
+      rightIcon: Assets.plusCircleIcon,
+      rightAction: onAddRoute,
+    );
+  }
+
+  Widget buildItem(TravelRoute item) {
+    return TravelRouteItem(
+      item: item,
+      onTab: (value) {
+        DialogUtils.showBottomSheetDialog(
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(DeviceDimension.padding),
+                child: SeatsStatus(travelRoute: item),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

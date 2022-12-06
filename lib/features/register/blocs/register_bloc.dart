@@ -14,7 +14,7 @@ class RegisterBloc extends BaseBloc<RegisterEvent, RegisterState> {
   RegisterBloc() : super(RegisterState.initial()) {
     on<OnRegisterPress>(
       (event, emit) async {
-        await UtilsHelper.runWithLoadingDialog(
+        await UtilsHelper.runInGuardZone(
           func: () async {
             emit(state.copyWith(isLoading: true));
 

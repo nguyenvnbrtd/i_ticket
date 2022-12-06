@@ -12,6 +12,8 @@ class DeviceDimension {
   static late final double screenWidth;
   static late final double screenHeight;
 
+  static double get padding => screenWidth * 0.05;
+
   void initValue(BuildContext context) {
     if (!_isInit) return;
     screenWidth = MediaQuery.of(context).size.width;

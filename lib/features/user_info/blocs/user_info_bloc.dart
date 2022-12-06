@@ -19,7 +19,7 @@ class UserInfoBloc extends BaseBloc<UserInfoEvent, UserInfoState> {
 
     on<OnSavePress>(
       (event, emit) async {
-        await UtilsHelper.runWithLoadingDialog(
+        await UtilsHelper.runInGuardZone(
           func: () async {
             emit(state.copyWith(isLoading: true));
             await repository.updateUser(data: event.userInfo);

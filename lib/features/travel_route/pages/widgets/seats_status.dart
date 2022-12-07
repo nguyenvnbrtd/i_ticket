@@ -5,7 +5,7 @@ import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/widgets/staless/base_tab_widget.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
 
-import '../../../../models/item_selected.dart';
+import '../../models/item_selected.dart';
 import '../../models/travle_route.dart';
 
 class SeatsStatus extends StatelessWidget {
@@ -61,7 +61,6 @@ class SeatsStatus extends StatelessWidget {
   }
 
   List<Widget> seatITemBuilder(List<String> seats, BuildContext context) {
-
     final List<Widget> results = [];
     for (int index = 0; index < seats.length; index++) {
       final i = index + 1;
@@ -82,9 +81,14 @@ class SeatsStatus extends StatelessWidget {
         StatusItem(
           name: name,
           number: number,
-          onTab: isEmpty ? (isSelected) {
-            if (onItemTab != null) onItemTab!(ItemSelected(index: index, isSelected: isSelected));
-          } : null,
+          defaultColor: isEmpty ? AppColors.green400 : AppColors.red,
+          selectedColor: AppColors.blue500,
+          isBooking: booking,
+          onTab: (isEmpty && onItemTab != null)
+              ? (isSelected) {
+                  onItemTab!(ItemSelected(index: index, isSelected: isSelected));
+                }
+              : null,
         ),
       );
     }
@@ -121,9 +125,20 @@ class StatusIndicator extends StatelessWidget {
 class StatusItem extends StatefulWidget {
   final String name;
   final String number;
+  final Color defaultColor;
+  final Color selectedColor;
+  final bool isBooking;
   final ValueChanged<bool>? onTab;
 
-  const StatusItem({Key? key, this.onTab, required this.name, required this.number, }) : super(key: key);
+  const StatusItem({
+    Key? key,
+    this.onTab,
+    required this.name,
+    required this.number,
+    this.isBooking = false,
+    required this.defaultColor,
+    required this.selectedColor,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _StatusItem();
@@ -141,15 +156,21 @@ class _StatusItem extends State<StatusItem> {
   Widget build(BuildContext context) {
     final paddingSize = DeviceDimension.padding;
     final itemSize = DeviceDimension.screenWidth * 0.15;
-    final color = widget.onTab == null ? AppColors.red : isSelected ? AppColors.blue500 : AppColors.green400;
+    Color color = isSelected ? widget.selectedColor : widget.defaultColor;
+    if(widget.defaultColor == AppColors.red) color = AppColors.red;
 
     return BaseTabWidget(
+      isDelay: false,
       onTap: () {
-        if(widget.onTab != null) {
-          setState(() {
-            isSelected = !isSelected;
+        if (widget.onTab != null) {
+          if (widget.isBooking) {
+            setState(() {
+              isSelected = !isSelected;
+              widget.onTab!(isSelected);
+            });
+          } else {
             widget.onTab!(isSelected);
-          });
+          }
         }
       },
       child: Container(
@@ -161,7 +182,10 @@ class _StatusItem extends State<StatusItem> {
           borderRadius: BorderRadius.circular(paddingSize * 0.6),
         ),
         child: Center(
-          child: Text('${widget.name}${widget.number}', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.white)),
+          child: Text(
+            '${widget.name}${widget.number}',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.white),
+          ),
         ),
       ),
     );

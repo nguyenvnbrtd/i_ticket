@@ -6,11 +6,13 @@ class BaseTabWidget extends StatelessWidget {
   final VoidCallback? onTap;
   final Widget? child;
   final bool dismissKeyboard;
+  final bool isDelay;
 
   const BaseTabWidget({
     Key? key,
     this.onTap,
     this.child,
+    this.isDelay = true,
     this.dismissKeyboard = true,
   }) : super(key: key);
 
@@ -20,11 +22,15 @@ class BaseTabWidget extends StatelessWidget {
       onTap: () {
         if(dismissKeyboard) UtilsHelper.dismissKeyBoard();
 
-        Debounce.instance.runBefore(
-          action: () {
-            if (onTap != null) onTap!();
-          },
-        );
+        if(isDelay){
+          Debounce.instance.runBefore(
+            action: () {
+              if (onTap != null) onTap!();
+            },
+          );
+        }else{
+          if (onTap != null) onTap!();
+        }
       },
       child: child,
     );

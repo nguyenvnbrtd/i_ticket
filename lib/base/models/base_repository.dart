@@ -33,10 +33,10 @@ class BaseRepository<T extends BaseModel>{
   }
 
   Stream<List<T>> get getAll {
-    return collection.snapshots().map(_convert);
+    return collection.snapshots().map(convert);
   }
 
-  List<T> _convert(QuerySnapshot<Object?> event) {
+  List<T> convert(QuerySnapshot<Object?> event) {
     return event.docs.map((e) => sample.fromJson(e.data()) as T).toList();
   }
 }

@@ -103,7 +103,7 @@ class TravelRouteScreenState extends State<TravelRouteScreen> {
             children: [
               Padding(
                 padding: EdgeInsets.all(DeviceDimension.padding),
-                child: SeatsStatus(travelRoute: item),
+                child: SeatsStatus(travelRoute: item, onItemTab: (value) {},),
               ),
             ],
           ),

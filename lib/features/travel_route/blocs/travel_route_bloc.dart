@@ -5,13 +5,20 @@ import 'package:flutter_animation/features/travel_route/event/travel_route_event
 import 'package:flutter_animation/features/travel_route/repos/travel_route_repository.dart';
 
 import '../../../injector.dart';
+import '../models/booking_detail.dart';
 import '../models/travle_route.dart';
+import '../repos/booking_route_repository.dart';
 import '../states/travel_route_state.dart';
 
 class TravelRouteBloc extends BaseBloc<TravelRouteEvent, TravelRouteState> {
   final TravelRouteRepository _repository = it<TravelRouteRepository>();
+  final BookingRouteRepository _bookingRepository = it<BookingRouteRepository>();
 
   Stream<List<TravelRoute>> get routes => _repository.getAll;
+
+  Stream<List<BookingDetail>> bookings (String uid) {
+    return _bookingRepository.getAllWithUserId(uid);
+  }
 
   TravelRouteBloc() : super(TravelRouteState.init()) {
     on<OnInitRoute>((event, emit) async {

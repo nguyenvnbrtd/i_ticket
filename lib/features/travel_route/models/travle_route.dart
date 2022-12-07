@@ -11,6 +11,7 @@ class TravelRoute extends BaseModel<TravelRoute> {
   String? departureTime;
   String? destinationTime;
   String? licensePlate;
+  double? price;
   String? distance; // km
   List<String>? seats; // km
 
@@ -22,6 +23,7 @@ class TravelRoute extends BaseModel<TravelRoute> {
     this.departureTime,
     this.destinationTime,
     this.licensePlate,
+    this.price,
     this.distance,
     this.seats = Constants.defaultSeats,
   }): super(id: id);
@@ -34,6 +36,7 @@ class TravelRoute extends BaseModel<TravelRoute> {
     departureTime = UtilsHelper.getJsonValueString(json, ['departureTime']);
     destinationTime = UtilsHelper.getJsonValueString(json, ['destinationTime']);
     licensePlate = UtilsHelper.getJsonValueString(json, ['licensePlate']);
+    price = UtilsHelper.getJsonValue(json, ['price']);
     distance = UtilsHelper.getJsonValueString(json, ['distance']);
     try{
       seats = List<String>.from(json["seats"].map((x) => x));
@@ -62,6 +65,7 @@ class TravelRoute extends BaseModel<TravelRoute> {
       departureTime: data?.departureTime ?? departureTime,
       destinationTime: data?.destinationTime ?? destinationTime,
       licensePlate: data?.licensePlate ?? licensePlate,
+      price: data?.price ?? price,
       distance: data?.distance ?? distance,
       seats: UtilsHelper.copyElementList<String>(defaultList: seats ?? Constants.defaultSeats, targetList: data?.seats ?? [], emptyValue: ''),
     );
@@ -77,11 +81,12 @@ class TravelRoute extends BaseModel<TravelRoute> {
     map['departureTime'] = departureTime;
     map['destinationTime'] = destinationTime;
     map['licensePlate'] = licensePlate;
+    map['price'] = price;
     map['distance'] = distance;
     map['seats'] = seats;
     return map;
   }
 
   @override
-  List<Object?> get props => [id, name, departureName, destinationName, departureTime, destinationTime, licensePlate, seats];
+  List<Object?> get props => [id, name, departureName, destinationName, departureTime, destinationTime, licensePlate, price, seats];
 }

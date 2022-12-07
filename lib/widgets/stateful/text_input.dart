@@ -4,19 +4,20 @@ import '../../../../../../core/src/app_colors.dart';
 import '../../../../../../core/src/assets.dart';
 
 class TextInput extends StatefulWidget {
-  TextInput(
-      {Key? key,
-      required this.controller,
-      this.hint = '',
-      this.imageFront,
-      this.imageBack,
-      this.onImageFrontPress,
-      this.onImageBackPress,
-      this.onTextChange,
-      this.borderWidth = 0,
-      this.borderColor = Colors.black,
-      this.secureText = false})
-      : super(key: key);
+  TextInput({
+    Key? key,
+    required this.controller,
+    this.hint = '',
+    this.imageFront,
+    this.imageBack,
+    this.onImageFrontPress,
+    this.onImageBackPress,
+    this.onTextChange,
+    this.borderWidth = 0,
+    this.borderColor = Colors.black,
+    this.keyboardType = TextInputType.text,
+    this.secureText = false,
+  }) : super(key: key);
 
   final TextEditingController controller;
   final String hint;
@@ -27,6 +28,7 @@ class TextInput extends StatefulWidget {
   final Function(String value)? onTextChange;
   final double borderWidth;
   final Color borderColor;
+  final TextInputType keyboardType;
   bool secureText;
 
   @override
@@ -57,6 +59,7 @@ class _TextInput extends State<TextInput> {
               obscureText: widget.secureText,
               enableSuggestions: !widget.secureText,
               autocorrect: !widget.secureText,
+              keyboardType: widget.keyboardType,
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                 hintText: widget.hint,
@@ -74,10 +77,11 @@ class _TextInput extends State<TextInput> {
               child: InputImageButton(
                 image: widget.imageBack ?? '',
                 color: widget.secureText ? null : AppColors.textLabel,
-                onPress: widget.onImageBackPress ?? () {
-                  widget.secureText = !widget.secureText;
-                  setState(() {});
-                },
+                onPress: widget.onImageBackPress ??
+                    () {
+                      widget.secureText = !widget.secureText;
+                      setState(() {});
+                    },
               ),
             ),
           )

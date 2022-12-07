@@ -5,13 +5,23 @@ import 'package:flutter_animation/features/travel_route/pages/components/travel_
 import '../../../../core/src/app_colors.dart';
 import '../../../../core/utils/dimension.dart';
 import '../../../../widgets/stateful/expand_widget.dart';
+import '../../models/item_selected.dart';
 import '../widgets/seats_status.dart';
 
-class BookingRouteItem extends TravelRouteItem {
-  const BookingRouteItem({Key? key, required TravelRoute item}) : super(key: key, item: item);
+class BookingRouteItem extends TravelRouteItem{
+  BookingRouteItem({Key? key, required TravelRoute item}) : super(key: key, item: item);
+
+  @override
+  TravelRouteItemState createState() => _BookingRouteItemState();
+}
+
+class _BookingRouteItemState extends TravelRouteItemState {
+  List<int> bookingIndex = [];
 
   @override
   Widget build(BuildContext context) {
+    onRefreshData(widget.item.seats ?? []);
+
     return Container(
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
@@ -38,10 +48,34 @@ class BookingRouteItem extends TravelRouteItem {
         child: super.buildContent(context),
       ),
       child: SeatsStatus(
-        travelRoute: item,
+        travelRoute: widget.item,
         booking: true,
-        onItemTab: (value) {},
+        onItemTab: onItemTab,
       ),
     );
+  }
+
+  @override
+  Widget buildAction(BuildContext context){
+    return Container();
+  }
+
+  void onRefreshData(List<String> data) {
+    bookingIndex.removeWhere((element){
+      if(data.length > element){
+        if(data[element].isNotEmpty) return true;
+      }
+      return false;
+    });
+  }
+
+  void onItemTab(ItemSelected value) {
+    if (value.isSelected) {
+      if (!bookingIndex.contains(value.index)) {
+        bookingIndex.add(value.index);
+      }
+    } else {
+      bookingIndex.remove(value.index);
+    }
   }
 }

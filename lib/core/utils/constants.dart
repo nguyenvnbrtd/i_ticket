@@ -37,6 +37,7 @@ class Constants {
 
   static const USER = 'user';
   static const TRAVEL_ROUTE = 'travel_route';
+  static const BOOKING_DETAIL = 'booking_detail';
 
   /// seats
   /// List<String>.generate(24, (index) => '');
@@ -48,4 +49,7 @@ class Constants {
     '', '', '', '',
     '', '', '', '',
   ];
+
+  /// price
+  static const priceType = 'VND';
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation/base/blocs/base_state.dart';
 import 'package:flutter_animation/core/src/app_colors.dart';
+import 'package:flutter_animation/core/utils/constants.dart';
 import 'package:flutter_animation/core/utils/dimension.dart';
+import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/features/travel_route/blocs/travel_route_bloc.dart';
 import 'package:flutter_animation/features/travel_route/event/travel_route_event.dart';
 import 'package:flutter_animation/features/travel_route/states/travel_route_state.dart';
@@ -33,6 +35,7 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
   late final TextEditingController _destinationController;
   late final TextEditingController _licensePlatesController;
   late final TextEditingController _distanceController;
+  late final TextEditingController _priceController;
 
   late final TravelRouteBloc travelRouteBloc;
 
@@ -45,7 +48,8 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
   final String timeMovingHint = 'Time Moving';
   final String departureTimeHint = 'Departure Time';
   final String destinationTimeHint = 'Destination Time';
-  final String _distanceHint = 'Distance (km)';
+  final String distanceHint = 'Distance (km)';
+  final String priceHint = 'Price (${Constants.priceType})';
   final String addLabel = 'Add';
   final String updateLabel = 'Update';
 
@@ -66,6 +70,7 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
     _destinationController = TextEditingController();
     _licensePlatesController = TextEditingController();
     _distanceController = TextEditingController();
+    _priceController = TextEditingController();
 
     if(widget.id.isNotEmpty){
       travelRouteBloc.add(OnInitRoute(id: widget.id));
@@ -93,6 +98,7 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
             _destinationController.text = state.route.destinationName ?? '';
             _licensePlatesController.text = state.route.licensePlate ?? '';
             _distanceController.text = state.route.distance ?? '';
+            _priceController.text = (state.route.price ?? '').toString();
 
             return BounceScroll(
               child: Container(
@@ -115,7 +121,9 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
                         const SpaceVertical(height: 10),
                         TextInput(controller: _licensePlatesController, hint: licenseHint, borderWidth: 0.5),
                         const SpaceVertical(height: 10),
-                        TextInput(controller: _distanceController, hint: _distanceHint, borderWidth: 0.5),
+                        TextInput(controller: _distanceController, hint: distanceHint, borderWidth: 0.5),
+                        const SpaceVertical(height: 10),
+                        TextInput(controller: _priceController, hint: priceHint, borderWidth: 0.5, keyboardType: TextInputType.number),
                         const SpaceVertical(height: 10),
                         BlocBuilder<TravelRouteBloc, TravelRouteState>(
                           buildWhen: (previous, current) => previous.route.departureTime != current.route.departureTime,
@@ -225,6 +233,7 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
           destinationName: _destinationController.text,
           distance: _distanceController.text,
           licensePlate: _licensePlatesController.text,
+          price: double.tryParse(_priceController.text),
         ),
       ),
     );
@@ -241,6 +250,7 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
           destinationName: _destinationController.text,
           distance: _distanceController.text,
           licensePlate: _licensePlatesController.text,
+          price: double.tryParse(_priceController.text),
         ),
       ),
     );

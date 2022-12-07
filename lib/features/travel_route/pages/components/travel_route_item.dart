@@ -13,17 +13,28 @@ import 'package:flutter_animation/widgets/staless/base_tab_widget.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/utils/constants.dart';
 import '../../../../models/travel_route_argument.dart';
 import '../../../../widgets/stateful/expand_widget.dart';
 
-class TravelRouteItem extends StatelessWidget {
+class TravelRouteItem extends StatefulWidget {
   final TravelRoute item;
   final ValueChanged<TravelRoute>? onTab;
 
   const TravelRouteItem({Key? key, required this.item, this.onTab}) : super(key: key);
 
+  @override
+  State<TravelRouteItem> createState() => TravelRouteItemState();
+}
+
+class TravelRouteItemState extends State<TravelRouteItem> {
   final deleteAlert = 'Delete route';
+
   final deleteMessage = 'Do you want to delete it?';
+
+  final paddingSize = DeviceDimension.screenWidth * 0.05;
+
+  final iconSize = DeviceDimension.screenWidth * 0.07;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +55,7 @@ class TravelRouteItem extends StatelessWidget {
       padding: EdgeInsets.all(DeviceDimension.padding),
       child: Builder(
         builder: (context) {
-          if (onTab != null) return BaseTabWidget(onTap: () => onTab!(item), child: buildContent(context));
+          if (widget.onTab != null) return BaseTabWidget(onTap: () => widget.onTab!(widget.item), child: buildContent(context));
           return buildContent(context);
         },
       ),
@@ -53,17 +64,15 @@ class TravelRouteItem extends StatelessWidget {
 
   Widget buildContent(BuildContext context){
     final theme = Theme.of(context);
-    final name = item.name!;
+    final name = widget.item.name!;
     final travelTime =
-        '${UtilsHelper.getTimeFromString(item.departureTime!)} - ${UtilsHelper.getTimeFromString(item.destinationTime!)}';
-    final license = item.licensePlate!;
-    final departure = item.departureName!;
-    final destination = item.destinationName!;
+        '${UtilsHelper.getTimeFromString(widget.item.departureTime!)} - ${UtilsHelper.getTimeFromString(widget.item.destinationTime!)}';
+    final license = widget.item.licensePlate!;
+    final price = '${widget.item.price} ${Constants.priceType}';
+    final departure = widget.item.departureName!;
+    final destination = widget.item.destinationName!;
     final routeStatus =
-        '${item.distance}km - ${UtilsHelper.getDiffHoursFromTwo(item.departureTime!, item.destinationTime!)}';
-
-    final paddingSize = DeviceDimension.screenWidth * 0.05;
-    final iconSize = DeviceDimension.screenWidth * 0.07;
+        '${widget.item.distance}km - ${UtilsHelper.getDiffHoursFromTwo(widget.item.departureTime!, widget.item.destinationTime!)}';
 
     return Stack(
       children: [
@@ -95,6 +104,12 @@ class TravelRouteItem extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: paddingSize / 1.5, vertical: paddingSize / 3),
               decoration: BoxDecoration(color: AppColors.lightGrey, borderRadius: BorderRadius.circular(paddingSize)),
               child: Text(license, style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.grey)),
+            ),
+            SpaceVertical(height: paddingSize / 2),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: paddingSize / 1.5, vertical: paddingSize / 3),
+              decoration: BoxDecoration(color: AppColors.lightGrey, borderRadius: BorderRadius.circular(paddingSize)),
+              child: Text(price, style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.grey)),
             ),
             SpaceVertical(height: paddingSize / 2),
             Stack(
@@ -153,31 +168,13 @@ class TravelRouteItem extends StatelessWidget {
             ),
           ],
         ),
-        Positioned(
-          bottom: 0,
-          right: 0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              BaseTabWidget(
-                child: Image.asset(Assets.editIcon, height: iconSize, fit: BoxFit.contain),
-                onTap: onEdit,
-              ),
-              SpaceHorizontal(width: paddingSize / 2),
-              BaseTabWidget(
-                child: Image.asset(Assets.trashIcon, height: iconSize, fit: BoxFit.contain),
-                onTap: () => onDelete(context),
-              )
-            ],
-          ),
-        ),
+        buildAction(context),
       ],
     );
   }
 
   void onEdit() {
-    UtilsHelper.pushNamed(Routes.addTravelRoute, TravelRouteArgument(item.id ?? ''));
+    UtilsHelper.pushNamed(Routes.addTravelRoute, TravelRouteArgument(widget.item.id ?? ''));
   }
 
   void onDelete(BuildContext context) {
@@ -188,8 +185,30 @@ class TravelRouteItem extends StatelessWidget {
         message: deleteMessage,
         onCancel: () {},
         onConfirm: () {
-          context.read<TravelRouteBloc>().add(OnDeleteRoute(id: item.id!));
+          context.read<TravelRouteBloc>().add(OnDeleteRoute(id: widget.item.id!));
         });
+  }
+
+  Widget buildAction(BuildContext context){
+    return Positioned(
+      bottom: 0,
+      right: 0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          BaseTabWidget(
+            child: Image.asset(Assets.editIcon, height: iconSize, fit: BoxFit.contain),
+            onTap: onEdit,
+          ),
+          SpaceHorizontal(width: paddingSize / 2),
+          BaseTabWidget(
+            child: Image.asset(Assets.trashIcon, height: iconSize, fit: BoxFit.contain),
+            onTap: () => onDelete(context),
+          )
+        ],
+      ),
+    );
   }
 }
 

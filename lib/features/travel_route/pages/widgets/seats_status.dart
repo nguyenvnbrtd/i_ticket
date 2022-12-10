@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animation/core/src/app_colors.dart';
 import 'package:flutter_animation/core/utils/dimension.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
+import 'package:flutter_animation/features/user_info/repos/user_info_repository.dart';
 import 'package:flutter_animation/widgets/staless/base_tab_widget.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
 
+import '../../../../injector.dart';
 import '../../models/item_selected.dart';
 import '../../models/travle_route.dart';
 
@@ -66,7 +68,7 @@ class SeatsStatus extends StatelessWidget {
       final i = index + 1;
       String name = 'A';
       String number = (i ~/ 4 + 1).toString();
-      final isEmpty = seats[index].isEmpty;
+      final isEmpty = seats[index].isEmpty || seats[index] == it<UserInfoRepository>().userInfo?.id;
 
       if (i % 4 == 0) {
         name = 'D';
@@ -160,7 +162,6 @@ class _StatusItem extends State<StatusItem> {
     if(widget.defaultColor == AppColors.red) color = AppColors.red;
 
     return BaseTabWidget(
-      isDelay: false,
       onTap: () {
         if (widget.onTab != null) {
           if (widget.isBooking) {

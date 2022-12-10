@@ -8,8 +8,9 @@ class UserInfo extends BaseModel<UserInfo> {
   String? name;
   String? phone;
   String? address;
+  bool? acceptTerms;
 
-  UserInfo({String? id, this.role, this.email, this.avatar, this.name, this.phone, this.address}) : super(id: id);
+  UserInfo({String? id, this.role, this.email, this.avatar, this.name, this.phone, this.address, this.acceptTerms}) : super(id: id);
 
   UserInfo.fromJson(dynamic json) {
     id = UtilsHelper.getJsonValueString(json, ['id']);
@@ -19,6 +20,7 @@ class UserInfo extends BaseModel<UserInfo> {
     name = UtilsHelper.getJsonValueString(json, ['name']);
     phone = UtilsHelper.getJsonValueString(json, ['phone']);
     address = UtilsHelper.getJsonValueString(json, ['address']);
+    acceptTerms = UtilsHelper.getJsonValue(json, ['acceptTerms']) ?? false;
   }
 
   @override
@@ -41,6 +43,7 @@ class UserInfo extends BaseModel<UserInfo> {
       address: data?.address ?? address,
       role: data?.role ?? role,
       avatar: data?.avatar ?? avatar,
+      acceptTerms: data?.acceptTerms ?? acceptTerms,
     );
   }
 
@@ -54,9 +57,10 @@ class UserInfo extends BaseModel<UserInfo> {
     map['name'] = name;
     map['phone'] = phone;
     map['address'] = address;
+    map['acceptTerms'] = acceptTerms;
     return map;
   }
 
   @override
-  List<Object?> get props => [id, role, email, avatar, name, phone, address];
+  List<Object?> get props => [id, role, email, avatar, name, phone, address, acceptTerms];
 }

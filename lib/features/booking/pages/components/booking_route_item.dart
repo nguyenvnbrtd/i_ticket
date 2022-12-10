@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation/core/utils/constants.dart';
+import 'package:flutter_animation/core/utils/dialog_utils.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/features/travel_route/models/travle_route.dart';
 import 'package:flutter_animation/features/travel_route/pages/components/travel_route_item.dart';
+import 'package:flutter_animation/features/user_info/repos/user_info_repository.dart';
+import 'package:flutter_animation/route/page_routes.dart';
 import 'package:flutter_animation/widgets/staless/primary_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/src/app_colors.dart';
 import '../../../../core/utils/dimension.dart';
+import '../../../../injector.dart';
+import '../../../../models/payment_argument.dart';
 import '../../../../widgets/stateful/expand_widget.dart';
 import '../../../travel_route/models/item_selected.dart';
 import '../../../travel_route/pages/widgets/seats_status.dart';
+import '../../../travel_route/repos/travel_route_repository.dart';
 import '../../blocs/booking_cubit.dart';
 import '../../states/booking_state.dart';
 
@@ -21,15 +27,32 @@ class BookingRouteItem extends TravelRouteItem {
   TravelRouteItemState createState() => _BookingRouteItemState();
 }
 
-class _BookingRouteItemState extends TravelRouteItemState {
+class _BookingRouteItemState extends TravelRouteItemState with WidgetsBindingObserver{
   final String conti = 'Continue';
 
   late final BookingCubit bookingBloc;
 
   @override
   void initState() {
-    bookingBloc = BookingCubit();
+    bookingBloc = BookingCubit(widget.item);
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    bookingBloc.clearTempTicket();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if(AppLifecycleState.paused == state){
+      bookingBloc.clearTempTicket();
+    }if(AppLifecycleState.resumed == state){
+      bookingBloc.tempTicket();
+    }
   }
 
   @override
@@ -143,7 +166,23 @@ class _BookingRouteItemState extends TravelRouteItemState {
     );
   }
 
-  void continueTab() {
-    bookingBloc.bookTicket(widget.item);
+  void continueTab() async {
+    if(it<UserInfoRepository>().userInfo?.acceptTerms ?? false){
+      bookingBloc.tempTicket();
+      gotoPayment();
+    }else{
+      bookingBloc.tempTicket();
+      await UtilsHelper.pushNamed(Routes.userInfoUpdate);
+      if(it<UserInfoRepository>().userInfo?.acceptTerms ?? false){
+        gotoPayment();
+      }else{
+        bookingBloc.clearTempTicket();
+      }
+    }
+  }
+
+  void gotoPayment() async {
+    await UtilsHelper.pushNamed(Routes.payment, PaymentArgument(bookingBloc));
+    bookingBloc.clearTempTicket();
   }
 }

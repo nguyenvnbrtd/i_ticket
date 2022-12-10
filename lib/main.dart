@@ -25,14 +25,14 @@ void main() async {
   );
   await init();
 
-  // runZonedGuarded(
-    // () {
+  runZonedGuarded(
+    () {
       runApp(const MyApp());
-    // },
-    // (error, stack) {
-    //   LogUtils.e(message: error.toString());
-    // },
-  // );
+    },
+    (error, stack) {
+      LogUtils.e(message: error.toString());
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -75,8 +75,7 @@ class MyApp extends StatelessWidget {
 
   void _authenticationListener(BuildContext context, state) async {
     if (state is AuthenticationStateLoggedIn) {
-      final userInfoRepository = it<UserInfoRepository>();
-      await userInfoRepository.getById(state.id);
+      it<UserInfoRepository>().getById(state.id);
       UtilsHelper.popAllAndPushNamed(Routes.main);
       return;
     }

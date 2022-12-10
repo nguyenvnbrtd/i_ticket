@@ -12,6 +12,7 @@ class AppColors {
   static Color blue600  = HexColor('#3E548D');
   static Color lightGrey = HexColor("D3D3D3");
   static Color grey = HexColor("#747474");
+  static Color grey400 = HexColor("#6F6F6F");
   static Color green = HexColor("#3bcd94");
   static Color green400 = HexColor("#4CCB9E");
   static Color greyBlueDark = HexColor("#0b1b32");

@@ -4,8 +4,6 @@ import 'package:flutter_animation/core/utils/unique_id_generator.dart';
 import 'package:flutter_animation/features/booking/models/booking_detail.dart';
 import 'package:flutter_animation/features/travel_route/models/travle_route.dart';
 import 'package:flutter_animation/features/travel_route/repos/travel_route_repository.dart';
-import 'package:flutter_animation/features/travel_route/repos/travel_route_repository.dart';
-import 'package:flutter_animation/features/user_info/repos/user_info_repository.dart';
 import 'package:flutter_animation/features/user_info/repos/user_info_repository.dart';
 
 import '../../../core/utils/utils_helper.dart';
@@ -18,15 +16,21 @@ class BookingCubit extends BaseCubit<BookingState> {
   final BookingRouteRepository _repository = it<BookingRouteRepository>();
   final UserInfoRepository _userRepository = it<UserInfoRepository>();
   final TravelRouteRepository _travelRouteRepository = it<TravelRouteRepository>();
+  late final TravelRoute travelRoute;
 
   Stream<List<BookingDetail>> routes(String uid) => _repository.getAllWithUserId(uid);
 
-  BookingCubit() : super(BookingState.init());
+  BookingCubit(TravelRoute route) : super(BookingState.init()){
+    travelRoute = route;
+  }
 
   void onRefreshData(List<String> data) {
     List<int> temp = List.from(state.selectedIndexs);
     temp.removeWhere((element) {
       if (data.length > element) {
+        if(_userRepository.userInfo?.id != null){
+          if (data[element] == _userRepository.userInfo?.id) return false;
+        }
         if (data[element].isNotEmpty) return true;
       }
       return false;
@@ -34,7 +38,7 @@ class BookingCubit extends BaseCubit<BookingState> {
     emit(state.copyWith(selectedIndexs: temp));
   }
 
-  void onItemTab(ItemSelected value) {
+  void onItemTab(ItemSelected value) async {
     List<int> temp = List.from(state.selectedIndexs);
 
     if (value.isSelected) {
@@ -47,12 +51,58 @@ class BookingCubit extends BaseCubit<BookingState> {
     emit(state.copyWith(selectedIndexs: temp));
   }
 
-  void bookTicket(TravelRoute travelRoute) async {
+  void tempTicket() async {
     await UtilsHelper.runInGuardZone(
       func: () async {
         emit(state.copyWith(isLoading: true));
 
-        final id = UniqueIdGenerator.uniqueId;
+        if(state.selectedIndexs.isEmpty){
+          throw 'Your seats be already booked!';
+        }
+
+        List<int> temp = List.from(state.selectedIndexs);
+        List<String> seats = travelRoute.seats ?? [];
+
+        for(int i = 0; i< temp.length; i++){
+          final index = temp[i];
+          if(seats.length > index){
+            seats[index] = _userRepository.userInfo?.id ?? '';
+          }
+        }
+
+        await _travelRouteRepository.update(id: travelRoute.id ?? '', data: travelRoute.copyWith(data: TravelRoute(seats: seats)));
+
+        emit(state.copyWith(isLoading: false));
+      },
+      onFailed: (e) async {
+        emit(state.copyWith(isLoading: false));
+      },
+    );
+  }
+
+  void clearTempTicket() {
+    List<int> temp = List.from(state.selectedIndexs);
+    List<String> seats = travelRoute.seats ?? [];
+
+    for(int i = 0; i< temp.length; i++){
+      final index = temp[i];
+      if(seats.length > index){
+        seats[index] = '';
+      }
+    }
+    _travelRouteRepository.update(id: travelRoute.id ?? '', data: travelRoute.copyWith(data: TravelRoute(seats: seats)));
+  }
+
+  void bookTicket(bool isPayed) async {
+    final id = UniqueIdGenerator.uniqueId;
+
+    await UtilsHelper.runInGuardZone(
+      func: () async {
+        emit(state.copyWith(isLoading: true));
+
+        if(state.selectedIndexs.isEmpty){
+          throw 'Your seats be already booked!';
+        }
 
         await _repository.create(BookingDetail(
           id: id,
@@ -60,6 +110,7 @@ class BookingCubit extends BaseCubit<BookingState> {
           updateTime: DateTime.now().toString(),
           routeId: travelRoute.id,
           userId: _userRepository.userInfo?.id ?? '',
+          isPayed: isPayed,
         ));
 
         List<int> temp = List.from(state.selectedIndexs);
@@ -74,10 +125,12 @@ class BookingCubit extends BaseCubit<BookingState> {
 
         await _travelRouteRepository.update(id: travelRoute.id ?? '', data: travelRoute.copyWith(data: TravelRoute(seats: seats)));
 
-        emit(state.copyWith(isLoading: false));
+        emit(state.copyWith(isLoading: false, selectedIndexs: []));
+        UtilsHelper.pop();
         DialogUtils.showToast('Book ticket success!');
       },
-      onFailed: (e) {
+      onFailed: (e) async {
+        await _repository.delete(id: id);
         emit(state.copyWith(isLoading: false));
       },
     );

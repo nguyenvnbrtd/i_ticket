@@ -7,6 +7,7 @@ class BookingDetail extends BaseModel<BookingDetail> {
   String? routeId;
   String? createTime;
   String? updateTime;
+  bool? isPayed;
 
   BookingDetail({
     String? id,
@@ -14,6 +15,7 @@ class BookingDetail extends BaseModel<BookingDetail> {
     this.routeId,
     this.createTime,
     this.updateTime,
+    this.isPayed = false,
   }): super(id: id);
 
   BookingDetail.fromJson(dynamic json) {
@@ -22,6 +24,7 @@ class BookingDetail extends BaseModel<BookingDetail> {
     routeId = UtilsHelper.getJsonValueString(json, ['routeId']);
     createTime = UtilsHelper.getJsonValueString(json, ['createTime']);
     updateTime = UtilsHelper.getJsonValueString(json, ['updateTime']);
+    isPayed = UtilsHelper.getJsonValue(json, ['isPayed']) ?? false;
   }
 
   @override
@@ -42,6 +45,7 @@ class BookingDetail extends BaseModel<BookingDetail> {
       routeId: data?.routeId ?? routeId,
       createTime: data?.createTime ?? createTime,
       updateTime: data?.updateTime ?? updateTime,
+      isPayed: data?.isPayed ?? isPayed,
     );
   }
 
@@ -53,9 +57,10 @@ class BookingDetail extends BaseModel<BookingDetail> {
     map['routeId'] = routeId;
     map['createTime'] = createTime;
     map['updateTime'] = updateTime;
+    map['isPayed'] = isPayed;
     return map;
   }
 
   @override
-  List<Object?> get props => [id, userId, routeId, createTime, updateTime];
+  List<Object?> get props => [id, userId, routeId, createTime, updateTime, isPayed];
 }

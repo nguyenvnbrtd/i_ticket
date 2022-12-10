@@ -1,6 +1,7 @@
 import 'package:flutter_animation/base/blocs/base_state.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/features/user_info/event/user_info_event.dart';
+import 'package:flutter_animation/models/user_info.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../base/blocs/base_bloc.dart';
@@ -16,6 +17,33 @@ class UserInfoBloc extends BaseBloc<UserInfoEvent, UserInfoState> {
     on<OnInitData>((event, emit) async {
       await repository.create(event.userInfo);
     });
+
+    on<OnAcceptTermsPress>(
+      (event, emit) async {
+        await UtilsHelper.runInGuardZone(
+          func: () async {
+            if((event.userInfo.name ?? '').isEmpty){
+              throw 'Please enter your full name';
+            }
+            if((event.userInfo.phone ?? '').isEmpty){
+              throw 'Please enter your phone number';
+            }
+            if((event.userInfo.address ?? '').isEmpty){
+              throw 'Please enter your address';
+            }
+
+            emit(state.copyWith(isLoading: true));
+            await repository.updateUser(data: event.userInfo.copyWith(data: UserInfo(acceptTerms: true)));
+            emit(state.copyWith(isLoading: false, isInfoChanged: false));
+            UtilsHelper.pop();
+          },
+          onFailed: (e) {
+            emit(state.copyWith(isLoading: false));
+          },
+          showLoading: false,
+        );
+      },
+    );
 
     on<OnSavePress>(
       (event, emit) async {

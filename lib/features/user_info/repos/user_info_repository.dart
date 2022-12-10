@@ -36,5 +36,6 @@ class UserInfoRepository extends BaseRepository<UserInfo>{
 
   Future<void> updateUser({required UserInfo data}) async {
     await collection.doc(userInfo?.id).set(userInfo?.copyWith(data: data).toJson());
+    await getById(userInfo?.id ?? '');
   }
 }

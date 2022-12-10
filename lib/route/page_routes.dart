@@ -3,14 +3,19 @@ import 'package:flutter_animation/features/forgot_password/pages/forgot_password
 import 'package:flutter_animation/features/home/pages/home_screen.dart';
 import 'package:flutter_animation/features/login/pages/login_screen.dart';
 import 'package:flutter_animation/features/main/pages/main_screen.dart';
+import 'package:flutter_animation/features/payment/pages/payment_screen.dart';
+import 'package:flutter_animation/features/travel_route/models/travle_route.dart';
 import 'package:flutter_animation/features/user_info/pages/user_info_initial_screen.dart';
 import 'package:flutter_animation/models/user_info_initial_argument.dart';
 
+import '../features/booking/blocs/booking_cubit.dart';
 import '../features/register/pages/register_screen.dart';
 import '../features/splash/pages/splash_screen.dart';
 import '../features/travel_route/pages/add_travel_route_screen.dart';
 import '../features/user_info/pages/user_info_screen.dart';
+import '../features/user_info/pages/user_info_update.dart';
 import '../models/arguments_screen_model.dart';
+import '../models/payment_argument.dart';
 import '../models/travel_route_argument.dart';
 
 class Routes {
@@ -24,8 +29,10 @@ class Routes {
   static const String main = '/main';
   static const String home = '/home';
   static const String userInfo = '/user_info';
+  static const String userInfoUpdate = '/user_info_update';
   static const String userInfoInitial = '/user_info_initial';
   static const String addTravelRoute = '/add_travel_route';
+  static const String payment = '/payment';
 
   static String _current = splash;
 
@@ -80,11 +87,23 @@ class Routes {
           routeSettings: const RouteSettings(name: userInfoInitial),
           widget: UserInfoInitialScreen(uid: arg.uid, email: arg.email),
         );
+      case userInfoUpdate:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: userInfoUpdate),
+          widget: const UserInfoUpdate(),
+        );
       case addTravelRoute:
         final arg = (arguments.data != null) ? arguments.data as TravelRouteArgument : TravelRouteArgument('');
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: addTravelRoute),
           widget: AddTravelRouteScreen(id: arg.id),
+        );
+      case payment:
+        final arg = (arguments.data != null) ? arguments.data as PaymentArgument : PaymentArgument(BookingCubit(TravelRoute()));
+
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: payment),
+          widget: PaymentScreen(bookingCubit: arg.bookingCubit),
         );
 
       default:

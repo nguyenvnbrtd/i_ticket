@@ -192,9 +192,9 @@ class UtilsHelper {
     UtilsHelper.popUntil((route) => route.settings.name == Routes.login);
   }
 
-  static void pushNamed(String route, [Object? data]) {
+  static Future<void> pushNamed(String route, [Object? data]) async {
     final arg = ArgumentsScreenModel(title: route, data: data);
-    Navigator.pushNamed(navigatorKey.currentContext!, route, arguments: arg);
+    await Navigator.pushNamed(navigatorKey.currentContext!, route, arguments: arg);
   }
 
   static void popAllAndPushNamed(String route) {
@@ -309,5 +309,22 @@ class UtilsHelper {
       }
     }
     return result;
+  }
+
+  static String getSeatName(int i){
+    String name = 'A';
+    String number = (i ~/ 4 + 1).toString();
+
+    if (i % 4 == 0) {
+      name = 'D';
+    } else if (i % 4 == 3) {
+      name = 'C';
+    } else if (i % 4 == 2) {
+      name = 'B';
+    } else if (i % 4 == 1) {
+      name = 'A';
+    }
+
+    return '$name$number';
   }
 }

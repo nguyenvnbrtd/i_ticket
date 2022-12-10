@@ -24,8 +24,12 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
           throw 'Cannot login';
         }
 
+        emit(state.copyWith(isLoading: false));
+
         UtilsHelper.login(value.user!.uid);
       }).onError((error, stackTrace) {
+        emit(state.copyWith(isLoading: false));
+
         if (error is FirebaseException) {
           DialogUtils.showToast(error.message ?? error.toString());
           return;
@@ -33,7 +37,6 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
         DialogUtils.showToast(error.toString());
       });
 
-      emit(state.copyWith(isLoading: false));
     });
   }
 }

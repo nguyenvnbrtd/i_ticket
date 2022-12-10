@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animation/features/travel_route/models/item_selected.dart';
 import 'package:flutter_animation/features/travel_route/pages/travel_route_screen.dart';
 
 import '../../../widgets/staless/main_label.dart';
-import '../models/travle_route.dart';
+import '../../travel_route/models/travle_route.dart';
 import 'components/booking_route_item.dart';
 
 class BookingScreen extends TravelRouteScreen {
@@ -27,5 +26,4 @@ class _BookingScreen extends TravelRouteScreenState {
   Widget buildItem(TravelRoute item) {
     return BookingRouteItem(item: item);
   }
-
 }

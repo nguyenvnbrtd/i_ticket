@@ -11,7 +11,7 @@ import '../../../core/blocs/authentication/authentication_bloc.dart';
 import '../../../core/blocs/authentication/authentication_event.dart';
 import '../../../widgets/stateful/custom_bottom_navigator/custom_bottom_navigator_item_model.dart';
 import '../../../widgets/stateful/custom_bottom_navigator/navigate_indicator_cubit.dart';
-import '../../travel_route/pages/booking_screen.dart';
+import '../../booking/pages/booking_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

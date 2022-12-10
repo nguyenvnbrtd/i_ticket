@@ -209,6 +209,11 @@ class UtilsHelper {
     navigatorKey.currentContext!.read<AuthenticationBloc>().add(AuthenticationEventLoggingOut());
   }
 
+  static String formatMoney(double money){
+    final oCcy = NumberFormat("#,##0", "vi_VN");
+    return oCcy.format(money);
+  }
+
   static String formatTime(DateTime date){
     DateFormat format = DateFormat(Constants.DATE_TIME_FORMAT);
     return format.format(date);

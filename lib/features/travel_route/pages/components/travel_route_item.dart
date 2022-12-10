@@ -68,7 +68,7 @@ class TravelRouteItemState extends State<TravelRouteItem> {
     final travelTime =
         '${UtilsHelper.getTimeFromString(widget.item.departureTime!)} - ${UtilsHelper.getTimeFromString(widget.item.destinationTime!)}';
     final license = widget.item.licensePlate!;
-    final price = '${widget.item.price} ${Constants.priceType}';
+    final price = '${widget.item.price} ${Constants.PRICE_TYPE}';
     final departure = widget.item.departureName!;
     final destination = widget.item.destinationName!;
     final routeStatus =
@@ -111,6 +111,7 @@ class TravelRouteItemState extends State<TravelRouteItem> {
               decoration: BoxDecoration(color: AppColors.lightGrey, borderRadius: BorderRadius.circular(paddingSize)),
               child: Text(price, style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.grey)),
             ),
+            buildEmptySeatsNumber(context),
             SpaceVertical(height: paddingSize / 2),
             Stack(
               alignment: Alignment.center,
@@ -209,6 +210,10 @@ class TravelRouteItemState extends State<TravelRouteItem> {
         ],
       ),
     );
+  }
+
+  Widget buildEmptySeatsNumber(BuildContext context) {
+    return Container();
   }
 }
 

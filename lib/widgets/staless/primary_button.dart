@@ -11,6 +11,7 @@ class PrimaryButton extends StatelessWidget {
     this.color = Colors.teal,
     this.textColor = Colors.white,
     this.borderColor = Colors.white,
+    this.borderRadius = edgSize,
     this.height = 45,
     this.width,
     this.borderWidth = 1,
@@ -25,6 +26,7 @@ class PrimaryButton extends StatelessWidget {
   final double height;
   final double? width;
   final double borderWidth;
+  final double borderRadius;
   final Widget? child;
 
   @override
@@ -32,7 +34,7 @@ class PrimaryButton extends StatelessWidget {
     return Material(
       clipBehavior: Clip.hardEdge,
       color: color,
-      borderRadius: BorderRadius.circular(edgSize),
+      borderRadius: BorderRadius.circular(borderRadius),
       child: BaseTabWidget(
         onTap: onPress,
         child: Container(
@@ -41,7 +43,7 @@ class PrimaryButton extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           padding: const EdgeInsets.all(edgSize),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(edgSize),
+            borderRadius: BorderRadius.circular(borderRadius),
             border: Border.all(color: borderColor, width: borderWidth),
           ),
           child: Center(

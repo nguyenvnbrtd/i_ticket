@@ -49,7 +49,7 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
   final String departureTimeHint = 'Departure Time';
   final String destinationTimeHint = 'Destination Time';
   final String distanceHint = 'Distance (km)';
-  final String priceHint = 'Price (${Constants.priceType})';
+  final String priceHint = 'Price (${Constants.PRICE_TYPE})';
   final String addLabel = 'Add';
   final String updateLabel = 'Update';
 

@@ -51,5 +51,5 @@ class Constants {
   ];
 
   /// price
-  static const priceType = 'VND';
+  static const PRICE_TYPE = 'VND';
 }

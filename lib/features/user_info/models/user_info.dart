@@ -1,5 +1,5 @@
 import 'package:flutter_animation/base/models/base_model.dart';
-import '../core/utils/utils_helper.dart';
+import '../../../core/utils/utils_helper.dart';
 
 class UserInfo extends BaseModel<UserInfo> {
   String? role;

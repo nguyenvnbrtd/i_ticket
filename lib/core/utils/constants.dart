@@ -52,4 +52,8 @@ class Constants {
 
   /// price
   static const PRICE_TYPE = 'VND';
+
+  /// role
+  static const ROLE_NORMAL = 'normal';
+  static const ROLE_ADMIN = 'admin';
 }

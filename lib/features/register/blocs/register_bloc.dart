@@ -2,7 +2,7 @@ import 'package:flutter_animation/base/blocs/base_bloc.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
 
 import '../../../injector.dart';
-import '../../../models/user_info_initial_argument.dart';
+import '../../../models/navigator_agruments/user_info_initial_argument.dart';
 import '../../../repos/user_repository.dart';
 import '../../../route/page_routes.dart';
 import '../event/register_event.dart';

@@ -31,16 +31,15 @@ class SeatsStatus extends StatelessWidget {
             'Departure Day: ${UtilsHelper.getDateFromString(travelRoute.departureTime ?? ' ')}',
             style: theme.textTheme.headlineSmall,
           ),
+          SpaceVertical(height: paddingSize / 2),
+          Text(
+            'Departure Time: ${UtilsHelper.getTimeFromString(travelRoute.departureTime ?? ' ')}',
+            style: theme.textTheme.headlineSmall,
+          ),
           SpaceVertical(height: paddingSize),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const SpaceHorizontal(),
-              StatusIndicator(color: AppColors.green400, label: 'Available'),
-              if (booking) StatusIndicator(color: AppColors.blue500, label: 'Selected'),
-              StatusIndicator(color: AppColors.red, label: 'Booked'),
-              const SpaceHorizontal(),
-            ],
+            children: buildIndicator(),
           ),
           SpaceVertical(height: paddingSize),
           SizedBox(
@@ -62,12 +61,29 @@ class SeatsStatus extends StatelessWidget {
     );
   }
 
+  List<Widget> buildIndicator(){
+    return [
+      const SpaceHorizontal(),
+      StatusIndicator(color: AppColors.green400, label: 'Available'),
+      if (booking) StatusIndicator(color: AppColors.blue500, label: 'Selected'),
+      StatusIndicator(color: AppColors.red, label: 'Booked'),
+      const SpaceHorizontal(),
+    ];
+  }
+
   List<Widget> seatITemBuilder(List<String> seats, BuildContext context) {
     final List<Widget> results = [];
     for (int index = 0; index < seats.length; index++) {
       final i = index + 1;
       String name = 'A';
-      String number = (i ~/ 4 + 1).toString();
+      String number = '0';
+
+      if(i % 4 != 0){
+        number = (i ~/ 4 + 1).toString();
+      }else{
+        number = (i ~/ 4).toString();
+      }
+
       final isEmpty = seats[index].isEmpty || seats[index] == it<UserInfoRepository>().userInfo?.id;
 
       if (i % 4 == 0) {

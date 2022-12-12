@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animation/core/blocs/authentication/authentication_bloc.dart';
 import 'package:flutter_animation/core/blocs/authentication/authentication_event.dart';
 import 'package:flutter_animation/core/utils/recase.dart';
-import 'package:flutter_animation/models/arguments_screen_model.dart';
+import 'package:flutter_animation/models/navigator_agruments/arguments_screen_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -312,8 +312,15 @@ class UtilsHelper {
   }
 
   static String getSeatName(int i){
+    i ++ ;
     String name = 'A';
-    String number = (i ~/ 4 + 1).toString();
+    String number = '0';
+
+    if(i % 4 != 0){
+      number = (i ~/ 4 + 1).toString();
+    }else{
+      number = (i ~/ 4).toString();
+    }
 
     if (i % 4 == 0) {
       name = 'D';

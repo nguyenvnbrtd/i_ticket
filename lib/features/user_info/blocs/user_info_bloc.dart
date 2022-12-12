@@ -1,7 +1,7 @@
 import 'package:flutter_animation/base/blocs/base_state.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/features/user_info/event/user_info_event.dart';
-import 'package:flutter_animation/models/user_info.dart';
+import 'package:flutter_animation/features/user_info/models/user_info.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../base/blocs/base_bloc.dart';

@@ -9,6 +9,7 @@ import 'package:flutter_animation/widgets/staless/spacer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils/dialog_utils.dart';
+import '../../../widgets/staless/empty_widget.dart';
 import '../../../widgets/staless/main_label.dart';
 import '../blocs/travel_route_bloc.dart';
 import 'components/travel_route_item.dart';
@@ -57,6 +58,10 @@ class TravelRouteScreenState extends State<TravelRouteScreen> {
                   stream: travelRouteBloc.routes,
                   builder: (context, snapshot) {
                     final data = snapshot.data ?? [];
+
+                    if(data.isEmpty){
+                      return const EmptyWidget();
+                    }
 
                     return ListView.separated(
                       clipBehavior: Clip.none,

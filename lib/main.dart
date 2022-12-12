@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
 
   void _authenticationListener(BuildContext context, state) async {
     if (state is AuthenticationStateLoggedIn) {
-      it<UserInfoRepository>().getById(state.id);
+      await it<UserInfoRepository>().getById(state.id);
       UtilsHelper.popAllAndPushNamed(Routes.main);
       return;
     }

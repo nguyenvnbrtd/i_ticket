@@ -36,12 +36,12 @@ class TravelRoute extends BaseModel<TravelRoute> {
     departureTime = UtilsHelper.getJsonValueString(json, ['departureTime']);
     destinationTime = UtilsHelper.getJsonValueString(json, ['destinationTime']);
     licensePlate = UtilsHelper.getJsonValueString(json, ['licensePlate']);
-    price = UtilsHelper.getJsonValue(json, ['price']);
+    price = UtilsHelper.getJsonValue(json, ['price']) ?? 1;
     distance = UtilsHelper.getJsonValueString(json, ['distance']);
     try{
       seats = List<String>.from(json["seats"].map((x) => x));
     }catch(e){
-      seats = Constants.defaultSeats;
+      seats = List.from(Constants.defaultSeats);
     }
   }
 

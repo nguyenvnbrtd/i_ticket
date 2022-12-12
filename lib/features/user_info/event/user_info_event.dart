@@ -1,6 +1,6 @@
 import 'package:flutter_animation/base/blocs/base_event.dart';
 
-import '../../../models/user_info.dart';
+import '../models/user_info.dart';
 
 abstract class UserInfoEvent extends BaseEvent{}
 

@@ -18,9 +18,11 @@ import '../../../widgets/stateful/filter_item_list.dart';
 import '../../booking/blocs/booking_cubit.dart';
 
 class PaymentScreen extends StatefulWidget {
-  final BookingCubit bookingCubit;
+  late final BookingCubit bookingCubit;
 
-  const PaymentScreen({Key? key, required this.bookingCubit}) : super(key: key);
+  PaymentScreen({Key? key, required BookingCubit bookingCubit}) : super(key: key){
+    this.bookingCubit = BookingCubit.initWith(bookingCubit);
+  }
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();

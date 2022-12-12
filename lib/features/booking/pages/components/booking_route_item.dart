@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/src/app_colors.dart';
 import '../../../../core/utils/dimension.dart';
 import '../../../../injector.dart';
-import '../../../../models/payment_argument.dart';
+import '../../../../models/navigator_agruments/payment_argument.dart';
 import '../../../../widgets/stateful/expand_widget.dart';
 import '../../../travel_route/models/item_selected.dart';
 import '../../../travel_route/pages/widgets/seats_status.dart';

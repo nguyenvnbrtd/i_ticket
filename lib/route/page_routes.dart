@@ -6,7 +6,7 @@ import 'package:flutter_animation/features/main/pages/main_screen.dart';
 import 'package:flutter_animation/features/payment/pages/payment_screen.dart';
 import 'package:flutter_animation/features/travel_route/models/travle_route.dart';
 import 'package:flutter_animation/features/user_info/pages/user_info_initial_screen.dart';
-import 'package:flutter_animation/models/user_info_initial_argument.dart';
+import 'package:flutter_animation/models/navigator_agruments/user_info_initial_argument.dart';
 
 import '../features/booking/blocs/booking_cubit.dart';
 import '../features/register/pages/register_screen.dart';
@@ -14,9 +14,9 @@ import '../features/splash/pages/splash_screen.dart';
 import '../features/travel_route/pages/add_travel_route_screen.dart';
 import '../features/user_info/pages/user_info_screen.dart';
 import '../features/user_info/pages/user_info_update.dart';
-import '../models/arguments_screen_model.dart';
-import '../models/payment_argument.dart';
-import '../models/travel_route_argument.dart';
+import '../models/navigator_agruments/arguments_screen_model.dart';
+import '../models/navigator_agruments/payment_argument.dart';
+import '../models/navigator_agruments/travel_route_argument.dart';
 
 class Routes {
 

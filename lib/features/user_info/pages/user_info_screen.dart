@@ -15,7 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../base/blocs/base_state.dart';
 import '../../../core/blocs/authentication/authentication_event.dart';
 import '../../../core/utils/utils_helper.dart';
-import '../../../models/user_info.dart';
+import '../models/user_info.dart';
 import '../repos/user_info_repository.dart';
 import 'components/user__info_input.dart';
 import 'components/user_divider.dart';

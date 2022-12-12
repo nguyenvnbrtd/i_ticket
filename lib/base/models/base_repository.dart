@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_animation/base/models/base_model.dart';
 import 'package:flutter_animation/core/utils/log_utils.dart';
 
-class BaseRepository<T extends BaseModel>{
+abstract class BaseRepository<T extends BaseModel>{
   late final CollectionReference collection;
   T sample;
 
@@ -15,7 +15,7 @@ class BaseRepository<T extends BaseModel>{
   }
 
   Future<T> getById(String id) async {
-    final response = await collection.doc(id).get(const GetOptions(source: Source.serverAndCache));
+    final response = await collection.doc(id).get(const GetOptions(source: Source.server));
     final data = response.data();
     if(data != null){
       return sample.fromJson(data);
@@ -37,6 +37,8 @@ class BaseRepository<T extends BaseModel>{
   }
 
   List<T> convert(QuerySnapshot<Object?> event) {
-    return event.docs.map((e) => sample.fromJson(e.data()) as T).toList();
+    return event.docs.map((e) => sample.fromJson(e.data()) as T).toList()..sort(sort);
   }
+
+  int sort(T a, T b);
 }

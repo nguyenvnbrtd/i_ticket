@@ -46,7 +46,13 @@ class CustomBottomNavigatorState extends State<CustomBottomNavigator> {
     ).size;
 
     // then the size of the selected item is: icon size + text size * 1.4
-    final double selectedWidth =  widget.items[widget.selectedIndex].iconSize + textSize.width * 1.4;
+    final size = mediaQueryData.size.width / (widget.items.length - 1);
+    double selectedWidth =  widget.items[widget.selectedIndex].iconSize + textSize.width * 1.4;
+
+    if(selectedWidth < size){
+      selectedWidth = size;
+      // selectedWidth = selectedWidth * 1.4;
+    }
 
     // then the rest of the width will be for the other item
     final normalWidth = (mediaQueryData.size.width - selectedWidth) / (widget.items.length-1);
@@ -62,6 +68,7 @@ class CustomBottomNavigatorState extends State<CustomBottomNavigator> {
         onTap: () => widget.onSelectedChange != null ? widget.onSelectedChange!(index) : (){},
         width: isSelected ? selectedWidth : normalWidth,
         height: widget.height,
+        textWidth: textSize.width,
       ));
     }
 

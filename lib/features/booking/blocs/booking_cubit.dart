@@ -18,7 +18,9 @@ class BookingCubit extends BaseCubit<BookingState> {
   final TravelRouteRepository _travelRouteRepository = it<TravelRouteRepository>();
   late final TravelRoute travelRoute;
 
-  Stream<List<BookingDetail>> routes(String uid) => _repository.getAllWithUserId(uid);
+  factory BookingCubit.initWith(BookingCubit bookingCubit){
+    return BookingCubit(bookingCubit.travelRoute)..emit(bookingCubit.state);
+  }
 
   BookingCubit(TravelRoute route) : super(BookingState.init()){
     travelRoute = route;
@@ -54,8 +56,6 @@ class BookingCubit extends BaseCubit<BookingState> {
   void tempTicket() async {
     await UtilsHelper.runInGuardZone(
       func: () async {
-        emit(state.copyWith(isLoading: true));
-
         if(state.selectedIndexs.isEmpty){
           throw 'Your seats be already booked!';
         }
@@ -63,20 +63,13 @@ class BookingCubit extends BaseCubit<BookingState> {
         List<int> temp = List.from(state.selectedIndexs);
         List<String> seats = travelRoute.seats ?? [];
 
-        for(int i = 0; i< temp.length; i++){
-          final index = temp[i];
-          if(seats.length > index){
-            seats[index] = _userRepository.userInfo?.id ?? '';
+        for(final i in temp){
+          if(seats.length > i){
+            seats[i] = _userRepository.userInfo?.id ?? '';
           }
         }
-
         await _travelRouteRepository.update(id: travelRoute.id ?? '', data: travelRoute.copyWith(data: TravelRoute(seats: seats)));
-
-        emit(state.copyWith(isLoading: false));
-      },
-      onFailed: (e) async {
-        emit(state.copyWith(isLoading: false));
-      },
+      }
     );
   }
 
@@ -110,6 +103,7 @@ class BookingCubit extends BaseCubit<BookingState> {
           updateTime: DateTime.now().toString(),
           routeId: travelRoute.id,
           userId: _userRepository.userInfo?.id ?? '',
+          seats: state.selectedIndexs,
           isPayed: isPayed,
         ));
 

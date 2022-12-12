@@ -8,6 +8,7 @@ class Assets {
   static const String bookingIcon = 'assets/images/booking.png';
   static const String routeIcon = 'assets/images/route.png';
   static const String settingIcon = 'assets/images/setting.png';
+  static const String historyIcon = 'assets/images/history.png';
   static const String userIcon = 'assets/images/user.png';
   static const String plusCircleIcon = 'assets/images/plus_circle.png';
   static const String departureCircleIcon = 'assets/images/departure_circle.png';
@@ -16,5 +17,7 @@ class Assets {
   static const String trashIcon = 'assets/images/trash.png';
   static const String backIcon = 'assets/images/back.png';
 
+
+  static const String emptyImage = 'assets/images/empty.png';
 
 }

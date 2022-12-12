@@ -10,11 +10,13 @@ class CustomBottomNavigatorItem extends StatelessWidget{
     required this.model,
     required this.onTap,
     required this.width,
+    required this.textWidth,
     required this.height,
 
   }) : super(key: key);
 
   final double width;
+  final double textWidth;
   final double height;
   final bool isSelected;
   final VoidCallback onTap;
@@ -39,12 +41,11 @@ class CustomBottomNavigatorItem extends StatelessWidget{
       textDirection: TextDirection.ltr)..layout()
     ).size;
 
-    final padding = textSize.width * 0.2;
+    final padding = mediaQueryData.size.width * 0.01;
 
     return AnimatedContainer(
       width: width,
       duration: animationDuration,
-      alignment: Alignment.center,
       child: InkWell(
         onTap: onTap,
         splashColor: Colors.transparent,
@@ -55,13 +56,11 @@ class CustomBottomNavigatorItem extends StatelessWidget{
           children: [
             Container(
               color: Colors.transparent,
-              width: model.iconSize,
-              height: model.iconSize,
-              child: Center(child: Image.asset(model.icon, color: isSelected ? selectedColor : theme.unselectedWidgetColor, fit: BoxFit.contain,)),
+              child: Center(child: Image.asset(model.icon, color: isSelected ? selectedColor : theme.unselectedWidgetColor, fit: BoxFit.contain, width: model.iconSize,)),
             ),
            AnimatedContainer(
              duration: animationDuration,
-             width: isSelected ? width - (model.iconSize + padding):0,
+             width: isSelected ? (textWidth + model.iconSize - padding*1.25):0,
              child: Padding(
                padding: EdgeInsets.only(left: isSelected ? padding : 0),
                child: Align(
@@ -74,7 +73,7 @@ class CustomBottomNavigatorItem extends StatelessWidget{
                      SpaceVertical(height: padding / 4),
                      AnimatedContainer(
                        duration: animationDuration,
-                       width: isSelected ? width + 5 : 0,
+                       width: isSelected ? textWidth + 5 : 0,
                        height: 3,
                        color: isSelected ? selectedColor : Colors.transparent,
                      )

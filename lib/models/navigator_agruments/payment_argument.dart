@@ -1,4 +1,4 @@
-import '../features/booking/blocs/booking_cubit.dart';
+import '../../features/booking/blocs/booking_cubit.dart';
 
 class PaymentArgument {
   final BookingCubit bookingCubit;

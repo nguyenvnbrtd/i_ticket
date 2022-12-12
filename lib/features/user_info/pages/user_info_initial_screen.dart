@@ -10,7 +10,7 @@ import '../../../core/src/app_colors.dart';
 import '../../../core/utils/dimension.dart';
 import '../../../core/utils/utils_helper.dart';
 import '../../../injector.dart';
-import '../../../models/user_info.dart';
+import '../models/user_info.dart';
 import '../../../widgets/base_screen/origin_screen.dart';
 import '../../../widgets/staless/base_tab_widget.dart';
 import '../../../widgets/staless/loading_button.dart';

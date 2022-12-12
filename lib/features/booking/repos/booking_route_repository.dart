@@ -9,4 +9,7 @@ class BookingRouteRepository extends BaseRepository<BookingDetail>{
   Stream<List<BookingDetail>> getAllWithUserId (String uid) {
     return collection.snapshots().map(convert).map((item) => item.where((element) => element.userId == uid).toList());
   }
+
+  @override
+  int sort(BookingDetail a, BookingDetail b) => b.updateTime?.compareTo(a.updateTime ?? '') ?? 0;
 }

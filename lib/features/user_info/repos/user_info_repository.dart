@@ -3,7 +3,7 @@ import 'package:flutter_animation/core/utils/constants.dart';
 import 'package:flutter_animation/core/utils/log_utils.dart';
 
 import '../../../base/models/base_repository.dart';
-import '../../../models/user_info.dart';
+import '../models/user_info.dart';
 
 class UserInfoRepository extends BaseRepository<UserInfo>{
   //user id
@@ -38,4 +38,7 @@ class UserInfoRepository extends BaseRepository<UserInfo>{
     await collection.doc(userInfo?.id).set(userInfo?.copyWith(data: data).toJson());
     await getById(userInfo?.id ?? '');
   }
+
+  @override
+  int sort(UserInfo a, UserInfo b) => a.email?.compareTo(b.email ?? '') ?? 0;
 }

@@ -5,4 +5,7 @@ import '../models/travle_route.dart';
 
 class TravelRouteRepository extends BaseRepository<TravelRoute>{
   TravelRouteRepository() : super(Constants.TRAVEL_ROUTE, TravelRoute());
+
+  @override
+  int sort(TravelRoute a, TravelRoute b) => b.departureTime?.compareTo(a.departureTime ?? '') ?? 0;
 }

@@ -7,15 +7,13 @@ import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/features/travel_route/blocs/travel_route_bloc.dart';
 import 'package:flutter_animation/features/travel_route/event/travel_route_event.dart';
 import 'package:flutter_animation/features/travel_route/models/travle_route.dart';
-import 'package:flutter_animation/features/travel_route/pages/widgets/seats_status.dart';
 import 'package:flutter_animation/route/page_routes.dart';
 import 'package:flutter_animation/widgets/staless/base_tab_widget.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/constants.dart';
-import '../../../../models/travel_route_argument.dart';
-import '../../../../widgets/stateful/expand_widget.dart';
+import '../../../../models/navigator_agruments/travel_route_argument.dart';
 
 class TravelRouteItem extends StatefulWidget {
   final TravelRoute item;

@@ -206,7 +206,12 @@ class UtilsHelper {
   }
 
   static void logout() {
-    navigatorKey.currentContext!.read<AuthenticationBloc>().add(AuthenticationEventLoggingOut());
+    DialogUtils.showPrimaryDialog(
+      label: 'Log out',
+      message: 'Do you want to sign out?',
+      onConfirm: () => navigatorKey.currentContext!.read<AuthenticationBloc>().add(AuthenticationEventLoggingOut()),
+      onCancel: (){}
+    );
   }
 
   static String formatMoney(double money){

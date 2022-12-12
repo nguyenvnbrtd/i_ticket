@@ -147,7 +147,7 @@ class _UserInfoScreen extends State<UserInfoScreen> {
   }
 
   void logOut() {
-    context.read<AuthenticationBloc>().add(AuthenticationEventLoggingOut());
+    UtilsHelper.logout();
   }
 
   void onValueChange(String value) {

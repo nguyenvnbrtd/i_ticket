@@ -28,7 +28,7 @@ class _HomeScreen extends State<HomeScreen> {
         child: Center(
           child: PrimaryButton(
             onPress: () {
-              context.read<AuthenticationBloc>().add(AuthenticationEventLoggingOut());
+              UtilsHelper.logout();
             },
             label: 'Log out',
           ),

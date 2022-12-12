@@ -38,6 +38,9 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
   late final TextEditingController _priceController;
 
   late final TravelRouteBloc travelRouteBloc;
+  late final PageController pageController;
+  late List<List<Widget>> pages;
+  int currentPage = 0;
 
   final String title = 'Add Route';
   final String title2 = 'Update Route';
@@ -56,13 +59,105 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
   @override
   void initState() {
     intiData();
-
+    initPage();
     super.initState();
   }
 
+  void initPage() {
+    final theme = Theme.of(UtilsHelper.navigatorKey.currentContext!);
+    pageController = PageController(keepPage: true);
+
+    pages = [];
+
+    pages.add([
+      TextInput(label: nameHint, controller: _nameController, hint: nameHint, borderWidth: 0.5),
+      const SpaceVertical(height: 10),
+      TextInput(label: departureHint, controller: _departureController, hint: departureHint, borderWidth: 0.5),
+      const SpaceVertical(height: 10),
+      TextInput(label: destinationHint, controller: _destinationController, hint: destinationHint, borderWidth: 0.5),
+    ]);
+
+    pages.add([
+      TextInput(
+          label: priceHint,
+          controller: _priceController,
+          hint: priceHint,
+          borderWidth: 0.5,
+          keyboardType: TextInputType.number),
+      const SpaceVertical(height: 10),
+      const SpaceVertical(height: 10),
+      TextInput(
+          label: distanceHint,
+          controller: _distanceController,
+          hint: distanceHint,
+          borderWidth: 0.5,
+          keyboardType: TextInputType.number),
+      const SpaceVertical(height: 10),
+      TextInput(label: licenseHint, controller: _licensePlatesController, hint: licenseHint, borderWidth: 0.5),
+      const SpaceVertical(height: 10),
+    ]);
+
+    pages.add([
+      Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: EdgeInsets.only(left: DeviceDimension.padding / 2),
+          child: Text(departureTimeHint, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
+        ),
+      ),
+      BlocBuilder<TravelRouteBloc, TravelRouteState>(
+        buildWhen: (previous, current) => previous.route.departureTime != current.route.departureTime,
+        builder: (context, state) {
+          final text = (state.route.departureTime ?? '').isNotEmpty ? state.route.departureTime : departureTimeHint;
+          final color = (state.route.departureTime ?? '').isNotEmpty ? AppColors.textLabel : AppColors.greyMedium;
+          return PrimaryButton(
+            borderWidth: 0.5,
+            color: AppColors.white,
+            borderColor: AppColors.primary,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                text!,
+                style: theme.textTheme.bodyMedium?.copyWith(color: color),
+              ),
+            ),
+            onPress: openSelectDepartureTime,
+          );
+        },
+      ),
+      const SpaceVertical(height: 10),
+      Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: EdgeInsets.only(left: DeviceDimension.padding / 2),
+          child: Text(destinationTimeHint, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
+        ),
+      ),
+      BlocBuilder<TravelRouteBloc, TravelRouteState>(
+        buildWhen: (previous, current) => previous.route.destinationTime != current.route.destinationTime,
+        builder: (context, state) {
+          final text = (state.route.destinationTime ?? '').isNotEmpty ? state.route.destinationTime : destinationTimeHint;
+          final color = (state.route.destinationTime ?? '').isNotEmpty ? AppColors.textLabel : AppColors.greyMedium;
+
+          return PrimaryButton(
+            borderWidth: 0.5,
+            color: AppColors.white,
+            borderColor: AppColors.primary,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                text!,
+                style: theme.textTheme.bodyMedium?.copyWith(color: color),
+              ),
+            ),
+            onPress: openSelectDestinationTime,
+          );
+        },
+      )
+    ]);
+  }
 
   void intiData() async {
-
     travelRouteBloc = TravelRouteBloc();
 
     _nameController = TextEditingController();
@@ -72,7 +167,7 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
     _distanceController = TextEditingController();
     _priceController = TextEditingController();
 
-    if(widget.id.isNotEmpty){
+    if (widget.id.isNotEmpty) {
       travelRouteBloc.add(OnInitRoute(id: widget.id));
     }
   }
@@ -81,111 +176,86 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
   Widget build(BuildContext context) {
     final paddingSize = DeviceDimension.screenWidth * 0.05;
     final ThemeData theme = Theme.of(context);
-
     return BlocProvider(
       create: (_) => travelRouteBloc,
-      child: OriginScreen(
-        appbar: const PrimaryAppBar(),
-        child: BlocBuilder<TravelRouteBloc, TravelRouteState>(
-          buildWhen: (previous, current) => previous.route.id != current.route.id,
-          builder: (context, state) {
-            if(state.isInitData){
-              return const Center(child: CircularProgressIndicator());
-            }
+      child: BlocListener<TravelRouteBloc, TravelRouteState>(
+        listenWhen: (previous, current) => previous.route.id != current.route.id,
+        listener: travelRouteBlocListener,
+        child: OriginScreen(
+          appbar: const PrimaryAppBar(),
+          child: BlocBuilder<TravelRouteBloc, TravelRouteState>(
+            buildWhen: (previous, current) => previous.route.id != current.route.id,
+            builder: (context, state) {
+              if (state.isInitData) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-            _nameController.text = state.route.name ?? '';
-            _departureController.text = state.route.departureName?? '';
-            _destinationController.text = state.route.destinationName ?? '';
-            _licensePlatesController.text = state.route.licensePlate ?? '';
-            _distanceController.text = state.route.distance ?? '';
-            _priceController.text = (state.route.price ?? '').toString();
-
-            return BounceScroll(
-              child: Container(
-                height: DeviceDimension.screenHeight - (50 + paddingSize*2),
-                padding: EdgeInsets.all(paddingSize),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(),
-                    Text(widget.id.isEmpty ? title : title2, style: theme.textTheme.headlineLarge),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        TextInput(controller: _nameController, hint: nameHint, borderWidth: 0.5),
-                        const SpaceVertical(height: 10),
-                        TextInput(controller: _departureController, hint: departureHint, borderWidth: 0.5),
-                        const SpaceVertical(height: 10),
-                        TextInput(controller: _destinationController, hint: destinationHint, borderWidth: 0.5),
-                        const SpaceVertical(height: 10),
-                        TextInput(controller: _licensePlatesController, hint: licenseHint, borderWidth: 0.5),
-                        const SpaceVertical(height: 10),
-                        TextInput(controller: _distanceController, hint: distanceHint, borderWidth: 0.5),
-                        const SpaceVertical(height: 10),
-                        TextInput(controller: _priceController, hint: priceHint, borderWidth: 0.5, keyboardType: TextInputType.number),
-                        const SpaceVertical(height: 10),
-                        BlocBuilder<TravelRouteBloc, TravelRouteState>(
-                          buildWhen: (previous, current) => previous.route.departureTime != current.route.departureTime,
-                          builder: (context, state) {
-                            final text = (state.route.departureTime ?? '').isNotEmpty ? state.route.departureTime : departureTimeHint;
-                            final color = (state.route.departureTime ?? '').isNotEmpty ? AppColors.textLabel : AppColors.greyMedium;
-                            return PrimaryButton(
-                              borderWidth: 0.5,
-                              color: AppColors.white,
-                              borderColor: AppColors.primary,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  text!,
-                                  style: theme.textTheme.bodyMedium?.copyWith(color: color),
-                                ),
-                              ),
-                              onPress: openSelectDepartureTime,
-                            );
+              return BounceScroll(
+                child: SizedBox(
+                  height: DeviceDimension.screenHeight * 0.85,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(),
+                      Text(widget.id.isEmpty ? title : title2, style: theme.textTheme.headlineLarge),
+                      SpaceVertical(height: DeviceDimension.screenHeight * 0.1),
+                      Expanded(
+                        flex: 6,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onPanDown: (_) {
+                            FocusScope.of(context).requestFocus(FocusNode());
                           },
-                        ),
-                        const SpaceVertical(height: 10),
-                        BlocBuilder<TravelRouteBloc, TravelRouteState>(
-                          buildWhen: (previous, current) => previous.route.destinationTime != current.route.destinationTime,
-                          builder: (context, state) {
-                            final text = (state.route.destinationTime ?? '').isNotEmpty ? state.route.destinationTime : destinationTimeHint;
-                            final color = (state.route.destinationTime ?? '').isNotEmpty ? AppColors.textLabel : AppColors.greyMedium;
-
-                            return PrimaryButton(
-                              borderWidth: 0.5,
-                              color: AppColors.white,
-                              borderColor: AppColors.primary,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  text!,
-                                  style: theme.textTheme.bodyMedium?.copyWith(color: color),
+                          child: PageView.builder(
+                            controller: pageController,
+                            itemCount: pages.length,
+                            onPageChanged: (value) {
+                              travelRouteBloc.add(
+                                OnChangeButtonLabel(
+                                  label: (value + 1) != pages.length
+                                      ? 'Next'
+                                      : widget.id.isEmpty
+                                          ? addLabel
+                                          : updateLabel,
                                 ),
-                              ),
-                              onPress: openSelectDestinationTime,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    BlocBuilder<TravelRouteBloc, BaseState>(
-                      builder: (context, state) => SizedBox(
-                        height: 55,
-                        child: LoadingButton(
-                          label: widget.id.isEmpty ? addLabel : updateLabel,
-                          onPress: onMainPress,
-                          isLoading: state.isLoading,
+                              );
+                              currentPage = value;
+                            },
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.all(paddingSize),
+                                child: Column(
+                                  children: List.from(pages[index])
+                                    ..add(SpaceVertical(height: DeviceDimension.screenHeight * 0.1)),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    const SpaceVertical(height: 10),
-                    const SpaceVertical(height: 10),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.all(paddingSize),
+                        child: BlocBuilder<TravelRouteBloc, TravelRouteState>(
+                          builder: (context, state) => SizedBox(
+                            height: 55,
+                            child: LoadingButton(
+                              label: state.buttonLabel,
+                              onPress: (currentPage + 1) != pages.length
+                                  ? () => pageController.nextPage(
+                                  duration: const Duration(milliseconds: 200), curve: Curves.easeInOut)
+                                  : onMainPress,
+                              isLoading: state.isLoading,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -215,10 +285,10 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
     );
   }
 
-  onMainPress(){
-    if(widget.id.isEmpty){
+  onMainPress() {
+    if (widget.id.isEmpty) {
       createRoute();
-    }else{
+    } else {
       updateRoute();
     }
   }
@@ -254,5 +324,15 @@ class _AddTravelRouteScreen extends State<AddTravelRouteScreen> {
         ),
       ),
     );
+  }
+
+  void travelRouteBlocListener(BuildContext context, TravelRouteState state) {
+
+    _nameController.text = state.route.name ?? '';
+    _departureController.text = state.route.departureName ?? '';
+    _destinationController.text = state.route.destinationName ?? '';
+    _licensePlatesController.text = state.route.licensePlate ?? '';
+    _distanceController.text = state.route.distance ?? '';
+    _priceController.text = (state.route.price ?? 0).toInt().toString();
   }
 }

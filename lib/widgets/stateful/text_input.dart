@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../core/src/app_colors.dart';
 import '../../../../../../core/src/assets.dart';
+import '../../core/utils/dimension.dart';
 
 class TextInput extends StatefulWidget {
   TextInput({
     Key? key,
     required this.controller,
+    this.label = '',
     this.hint = '',
     this.imageFront,
     this.imageBack,
@@ -20,6 +22,7 @@ class TextInput extends StatefulWidget {
   }) : super(key: key);
 
   final TextEditingController controller;
+  final String label;
   final String hint;
   final String? imageFront;
   final String? imageBack;
@@ -38,55 +41,69 @@ class TextInput extends StatefulWidget {
 class _TextInput extends State<TextInput> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: widget.borderWidth == 0 ? Colors.transparent : widget.borderColor,
-          width: widget.borderWidth,
+    final theme = Theme.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Visibility(
+          visible: widget.label.isNotEmpty,
+          child: Padding(
+            padding: EdgeInsets.only(left: DeviceDimension.padding / 2),
+            child: Text(widget.label, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
+          ),
         ),
-      ),
-      child: Row(
-        children: [
-          if (widget.imageFront != null) InputImageButton(image: widget.imageFront!, onPress: widget.onImageFrontPress),
-          Expanded(
-            child: TextField(
-              controller: widget.controller,
-              onChanged: widget.onTextChange,
-              style: TextStyle(color: AppColors.textLabel, fontSize: 16),
-              obscureText: widget.secureText,
-              enableSuggestions: !widget.secureText,
-              autocorrect: !widget.secureText,
-              keyboardType: widget.keyboardType,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                hintText: widget.hint,
-                hintStyle: TextStyle(color: AppColors.greyMedium, fontSize: 16),
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                prefixIconConstraints: const BoxConstraints(maxWidth: 20, maxHeight: 20),
-              ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: widget.borderWidth == 0 ? Colors.transparent : widget.borderColor,
+              width: widget.borderWidth,
             ),
           ),
-          Visibility(
-            visible: widget.imageBack != null,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: InputImageButton(
-                image: widget.imageBack ?? '',
-                color: widget.secureText ? null : AppColors.textLabel,
-                onPress: widget.onImageBackPress ??
-                    () {
-                      widget.secureText = !widget.secureText;
-                      setState(() {});
-                    },
+          child: Row(
+            children: [
+              if (widget.imageFront != null) InputImageButton(image: widget.imageFront!, onPress: widget.onImageFrontPress),
+              Expanded(
+                child: TextField(
+                  controller: widget.controller,
+                  onChanged: widget.onTextChange,
+                  style: TextStyle(color: AppColors.textLabel, fontSize: 16),
+                  obscureText: widget.secureText,
+                  enableSuggestions: !widget.secureText,
+                  autocorrect: !widget.secureText,
+                  keyboardType: widget.keyboardType,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                    hintText: widget.hint,
+                    hintStyle: TextStyle(color: AppColors.greyMedium, fontSize: 16),
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    prefixIconConstraints: const BoxConstraints(maxWidth: 20, maxHeight: 20),
+                  ),
+                ),
               ),
-            ),
-          )
-        ],
-      ),
+              Visibility(
+                visible: widget.imageBack != null,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: InputImageButton(
+                    image: widget.imageBack ?? '',
+                    color: widget.secureText ? null : AppColors.textLabel,
+                    onPress: widget.onImageBackPress ??
+                        () {
+                          widget.secureText = !widget.secureText;
+                          setState(() {});
+                        },
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

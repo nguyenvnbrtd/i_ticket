@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/blocs/authentication/authentication_bloc.dart';
 import '../../../core/blocs/authentication/authentication_event.dart';
 import '../../../core/utils/constants.dart';
+import '../../../core/utils/utils_helper.dart';
 import '../../../injector.dart';
 import '../../../widgets/stateful/custom_bottom_navigator/custom_bottom_navigator_item_model.dart';
 import '../../../widgets/stateful/custom_bottom_navigator/navigate_indicator_cubit.dart';
@@ -95,7 +96,7 @@ class _MainScreen extends State<MainScreen> {
   }
 
   Future<bool> logOut() async {
-    context.read<AuthenticationBloc>().add(AuthenticationEventLoggingOut());
+    UtilsHelper.logout();
     return false;
   }
 }

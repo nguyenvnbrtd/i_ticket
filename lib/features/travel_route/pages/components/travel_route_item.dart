@@ -66,7 +66,7 @@ class TravelRouteItemState extends State<TravelRouteItem> {
     final travelTime =
         '${UtilsHelper.getTimeFromString(widget.item.departureTime!)} - ${UtilsHelper.getTimeFromString(widget.item.destinationTime!)}';
     final license = widget.item.licensePlate!;
-    final price = '${widget.item.price} ${Constants.PRICE_TYPE}';
+    final price = '${UtilsHelper.formatMoney(widget.item.price ?? 0)} ${Constants.PRICE_TYPE}';
     final departure = widget.item.departureName!;
     final destination = widget.item.destinationName!;
     final routeStatus =
@@ -197,12 +197,17 @@ class TravelRouteItemState extends State<TravelRouteItem> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           BaseTabWidget(
-            child: Image.asset(Assets.editIcon, height: iconSize, fit: BoxFit.contain),
+            child: Padding(
+              padding: EdgeInsets.all(DeviceDimension.padding/2).copyWith(bottom: 0),
+              child: Image.asset(Assets.editIcon, height: iconSize, fit: BoxFit.contain),
+            ),
             onTap: onEdit,
           ),
-          SpaceHorizontal(width: paddingSize / 2),
           BaseTabWidget(
-            child: Image.asset(Assets.trashIcon, height: iconSize, fit: BoxFit.contain),
+            child: Padding(
+              padding: EdgeInsets.all(DeviceDimension.padding/2).copyWith(bottom: 0, right: 0),
+              child: Image.asset(Assets.trashIcon, height: iconSize, fit: BoxFit.contain),
+            ),
             onTap: () => onDelete(context),
           )
         ],

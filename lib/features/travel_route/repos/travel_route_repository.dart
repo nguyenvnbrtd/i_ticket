@@ -7,5 +7,5 @@ class TravelRouteRepository extends BaseRepository<TravelRoute>{
   TravelRouteRepository() : super(Constants.TRAVEL_ROUTE, TravelRoute());
 
   @override
-  int sort(TravelRoute a, TravelRoute b) => b.departureTime?.compareTo(a.departureTime ?? '') ?? 0;
+  int sort(TravelRoute a, TravelRoute b) => a.departureTime?.compareTo(b.departureTime ?? '') ?? 0;
 }

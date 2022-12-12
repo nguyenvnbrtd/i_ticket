@@ -46,7 +46,7 @@ class CustomBottomNavigatorState extends State<CustomBottomNavigator> {
     ).size;
 
     // then the size of the selected item is: icon size + text size * 1.4
-    final size = mediaQueryData.size.width / (widget.items.length - 1);
+    final size = mediaQueryData.size.width / (widget.items.length <= 2 ? widget.items.length : widget.items.length-1);
     double selectedWidth =  widget.items[widget.selectedIndex].iconSize + textSize.width * 1.4;
 
     if(selectedWidth < size){

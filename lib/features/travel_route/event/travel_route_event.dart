@@ -57,3 +57,12 @@ class OnChangeDestinationTime extends TravelRouteEvent{
   @override
   List<Object?> get props => [time];
 }
+
+class OnChangeButtonLabel extends TravelRouteEvent{
+  final String label;
+
+  OnChangeButtonLabel({required this.label});
+
+  @override
+  List<Object?> get props => [label];
+}

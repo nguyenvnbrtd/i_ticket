@@ -53,7 +53,7 @@ class TravelRouteScreenState extends State<TravelRouteScreen> {
               child: Container(
                 clipBehavior: Clip.hardEdge,
                 decoration: const BoxDecoration(),
-                padding: EdgeInsets.all(paddingSize),
+                padding: EdgeInsets.all(paddingSize).copyWith(top: 0),
                 child: StreamBuilder<List<TravelRoute>>(
                   stream: travelRouteBloc.routes,
                   builder: (context, snapshot) {

@@ -31,7 +31,10 @@ class MainLabel extends StatelessWidget {
         if (rightIcon.isNotEmpty)
           BaseTabWidget(
             onTap: rightAction,
-            child: Image.asset(rightIcon, color: AppColors.primary, width: widgetSize, height: widgetSize),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(rightIcon, color: AppColors.primary, width: widgetSize, height: widgetSize),
+            ),
           ),
       ],
     );

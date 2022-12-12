@@ -39,10 +39,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
           padding: EdgeInsets.all(DeviceDimension.padding),
           child: Column(
             children: [
+              SpaceVertical(
+                height: DeviceDimension.padding,
+              ),
               MainLabel(
                 label: title,
-                widgetSize: 30,
-                alignment: MainAxisAlignment.start,
               ),
               SpaceVertical(height: DeviceDimension.padding),
               Expanded(

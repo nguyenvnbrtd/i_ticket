@@ -16,6 +16,7 @@ class PrimaryButton extends StatelessWidget {
     this.width,
     this.borderWidth = 1,
     this.child,
+    this.isDelay = true,
   }) : super(key: key);
 
   final String label;
@@ -28,6 +29,7 @@ class PrimaryButton extends StatelessWidget {
   final double borderWidth;
   final double borderRadius;
   final Widget? child;
+  final bool isDelay;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class PrimaryButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(borderRadius),
       child: BaseTabWidget(
         onTap: onPress,
+        isDelay: isDelay,
         child: Container(
           height: height,
           width: width,

@@ -102,5 +102,8 @@ class TravelRouteBloc extends BaseBloc<TravelRouteEvent, TravelRouteState> {
     on<OnChangeButtonLabel>((event, emit) async {
       emit(state.copyWith(buttonLabel: event.label));
     },);
+    on<OnSearchRoute>((event, emit) async {
+      emit(state.copyWith(searchKeyword: event.keyword));
+    },);
   }
 }

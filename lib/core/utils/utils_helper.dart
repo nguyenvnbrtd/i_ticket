@@ -339,4 +339,11 @@ class UtilsHelper {
 
     return '$name$number';
   }
+
+  static bool contain(String a, String b){
+    if(a.toUpperCase().contains(b.toUpperCase())){
+      return true;
+    }
+    return false;
+  }
 }

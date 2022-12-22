@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation/core/src/assets.dart';
+import 'package:flutter_animation/core/utils/debounce.dart';
 import 'package:flutter_animation/core/utils/dimension.dart';
 import 'package:flutter_animation/core/utils/utils_helper.dart';
+import 'package:flutter_animation/features/travel_route/event/travel_route_event.dart';
 import 'package:flutter_animation/features/travel_route/models/travle_route.dart';
+import 'package:flutter_animation/features/travel_route/states/travel_route_state.dart';
 import 'package:flutter_animation/route/page_routes.dart';
 import 'package:flutter_animation/widgets/base_screen/origin_screen.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
@@ -11,6 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/dialog_utils.dart';
 import '../../../widgets/staless/empty_widget.dart';
 import '../../../widgets/staless/main_label.dart';
+import '../../../widgets/staless/search_bar.dart';
+import '../../../widgets/staless/search_empty_widget.dart';
 import '../blocs/travel_route_bloc.dart';
 import 'components/travel_route_item.dart';
 import 'widgets/seats_status.dart';
@@ -42,13 +47,10 @@ class TravelRouteScreenState extends State<TravelRouteScreen> {
       child: OriginScreen(
         child: Column(
           children: [
-            SpaceVertical(
-              height: paddingSize,
-            ),
-            Padding(
-              padding: EdgeInsets.all(paddingSize),
-              child: buildHeader(),
-            ),
+            SpaceVertical(height: paddingSize),
+            Padding(padding: EdgeInsets.all(paddingSize), child: buildHeader()),
+            SearchBar(onChange: onSearching),
+            SpaceVertical(height: paddingSize / 2),
             Expanded(
               child: Container(
                 clipBehavior: Clip.hardEdge,
@@ -59,19 +61,33 @@ class TravelRouteScreenState extends State<TravelRouteScreen> {
                   builder: (context, snapshot) {
                     final data = snapshot.data ?? [];
 
-                    if(data.isEmpty){
+                    if (data.isEmpty) {
                       return const EmptyWidget();
                     }
 
-                    return ListView.separated(
-                      clipBehavior: Clip.none,
-                      physics: const BouncingScrollPhysics(),
-                      separatorBuilder: (context, index) {
-                        return SpaceVertical(height: paddingSize);
-                      },
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        return buildItem(data[index]);
+                    return BlocBuilder<TravelRouteBloc, TravelRouteState>(
+                      buildWhen: (previous, current) => previous.searchKeyword != current.searchKeyword,
+                      builder: (context, state) {
+                        final newData = data
+                            .where((e) => (UtilsHelper.contain(e.departureName!, state.searchKeyword) ||
+                                UtilsHelper.contain(e.destinationName!, state.searchKeyword) ||
+                                UtilsHelper.contain(e.name!, state.searchKeyword)))
+                            .toList();
+
+                        if (newData.isEmpty) return const SearchEmptyWidget();
+
+                        return ListView.separated(
+                          padding: const EdgeInsets.only(top: 5),
+                          clipBehavior: Clip.none,
+                          physics: const BouncingScrollPhysics(),
+                          separatorBuilder: (context, index) {
+                            return SpaceVertical(height: paddingSize);
+                          },
+                          itemCount: newData.length,
+                          itemBuilder: (context, index) {
+                            return buildItem(newData[index]);
+                          },
+                        );
                       },
                     );
                   },
@@ -108,12 +124,24 @@ class TravelRouteScreenState extends State<TravelRouteScreen> {
             children: [
               Padding(
                 padding: EdgeInsets.all(DeviceDimension.padding),
-                child: SeatsStatus(travelRoute: item, onItemTab: (value) {},),
+                child: SeatsStatus(
+                  travelRoute: item,
+                  onItemTab: (value) {},
+                ),
               ),
             ],
           ),
         );
       },
+    );
+  }
+
+  void onSearching(String value) {
+    Debounce.instance.runAfter(
+      action: () {
+        travelRouteBloc.add(OnSearchRoute(keyword: value));
+      },
+      rate: 500,
     );
   }
 }

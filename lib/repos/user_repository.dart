@@ -15,6 +15,11 @@ class UserRepository {
     return await _firebaseAuth?.createUserWithEmailAndPassword(email: email, password: password);
   }
 
+  Future<void> changePassword(String password) async {
+    final user = await getUser();
+    await user?.updatePassword(password);
+  }
+
   Future<void> logOut() async {
     return await _firebaseAuth?.signOut();
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animation/features/change_password/pages/change_password_screen.dart';
 import 'package:flutter_animation/features/forgot_password/pages/forgot_password_screen.dart';
 import 'package:flutter_animation/features/home/pages/home_screen.dart';
 import 'package:flutter_animation/features/login/pages/login_screen.dart';
@@ -26,6 +27,7 @@ class Routes {
   static const String login = '/login';
   static const String register = '/register';
   static const String forgotPassword = '/forgot_pass';
+  static const String changePassword = '/change_pass';
   static const String main = '/main';
   static const String home = '/home';
   static const String userInfo = '/user_info';
@@ -65,6 +67,11 @@ class Routes {
         return SlideRightRoute(
           routeSettings: const RouteSettings(name: forgotPassword),
           widget: const ForgotPasswordScreen(),
+        );
+      case changePassword:
+        return SlideRightRoute(
+          routeSettings: const RouteSettings(name: changePassword),
+          widget: const ChangePasswordScreen(),
         );
       case main:
         return SlideRightRoute(

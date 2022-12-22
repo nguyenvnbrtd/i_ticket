@@ -7,7 +7,9 @@ import 'package:flutter_animation/features/user_info/blocs/user_info_bloc.dart';
 import 'package:flutter_animation/features/user_info/event/user_info_event.dart';
 import 'package:flutter_animation/features/user_info/states/user_info_state.dart';
 import 'package:flutter_animation/injector.dart';
+import 'package:flutter_animation/route/page_routes.dart';
 import 'package:flutter_animation/widgets/base_screen/origin_screen.dart';
+import 'package:flutter_animation/widgets/staless/base_tab_widget.dart';
 import 'package:flutter_animation/widgets/staless/loading_button.dart';
 import 'package:flutter_animation/widgets/staless/primary_button.dart';
 import 'package:flutter_animation/widgets/staless/spacer.dart';
@@ -50,6 +52,7 @@ class _UserInfoScreen extends State<UserInfoScreen> {
   final String addressHint = 'Update your Address';
   final String save = 'Save';
   final String logoutLabel = 'Log out';
+  final String changePass = 'Change password';
 
   @override
   void initState() {
@@ -79,11 +82,23 @@ class _UserInfoScreen extends State<UserInfoScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  height: topSize,
-                  color: AppColors.greyBlueDark,
-                  alignment: Alignment.center,
-                  child: UserAvatar(avatar: userInfoRepository.userInfo?.avatar ?? ''),
+                Stack(
+                  children: [
+                    Container(
+                      height: topSize,
+                      color: AppColors.greyBlueDark,
+                      alignment: Alignment.center,
+                      child: UserAvatar(avatar: userInfoRepository.userInfo?.avatar ?? ''),
+                    ),
+                    Positioned(
+                      child: BaseTabWidget(
+                        onTap: openChangePassword,
+                        child: Text(changePass, style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.white)),
+                      ),
+                      right: DeviceDimension.padding,
+                      bottom: 10,
+                    )
+                  ],
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: padding, vertical: padding / 2),
@@ -95,7 +110,8 @@ class _UserInfoScreen extends State<UserInfoScreen> {
                       const UserDivider(),
                       UserInfoInput(title: phone, hint: phoneHint, controller: phoneController, onChanged: onValueChange),
                       const UserDivider(),
-                      UserInfoInput(title: address, hint: addressHint, controller: addressController, onChanged: onValueChange),
+                      UserInfoInput(
+                          title: address, hint: addressHint, controller: addressController, onChanged: onValueChange),
                       const UserDivider(),
                       const SpaceVertical(),
                       BlocBuilder<UserInfoBloc, UserInfoState>(
@@ -152,5 +168,9 @@ class _UserInfoScreen extends State<UserInfoScreen> {
 
   void onValueChange(String value) {
     userInfoBloc.add(OnInfoChanged(changed: true));
+  }
+
+  void openChangePassword() {
+    UtilsHelper.pushNamed(Routes.changePassword);
   }
 }

@@ -18,8 +18,10 @@ class Assets {
   static const String editIcon = 'assets/images/edit.png';
   static const String trashIcon = 'assets/images/trash.png';
   static const String backIcon = 'assets/images/back.png';
+  static const String searchIcon = 'assets/images/search.png';
 
 
   static const String emptyImage = 'assets/images/empty.png';
+  static const String searchEmptyImage = 'assets/images/search_empty.png';
 
 }

@@ -57,7 +57,7 @@ class BookingCubit extends BaseCubit<BookingState> {
     await UtilsHelper.runInGuardZone(
       func: () async {
         if(state.selectedIndexs.isEmpty){
-          throw 'Your seats be already booked!';
+          return;
         }
 
         List<int> temp = List.from(state.selectedIndexs);

@@ -6,9 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../widgets/staless/empty_widget.dart';
 import '../../../widgets/staless/spacer.dart';
-import '../../booking/blocs/booking_cubit.dart';
 import '../../booking/models/booking_detail.dart';
-import '../../travel_route/models/travle_route.dart';
 import '../blocs/history_cubit.dart';
 import 'components/history_item.dart';
 
@@ -40,10 +38,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
           child: Column(
             children: [
               SpaceVertical(
-                height: DeviceDimension.padding,
+                height: DeviceDimension.padding
               ),
               MainLabel(
-                label: title,
+                label: title
               ),
               SpaceVertical(height: DeviceDimension.padding),
               Expanded(

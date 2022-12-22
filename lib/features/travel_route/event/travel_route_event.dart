@@ -3,6 +3,15 @@ import 'package:flutter_animation/features/travel_route/models/travle_route.dart
 
 abstract class TravelRouteEvent extends BaseEvent{}
 
+class OnSearchRoute extends TravelRouteEvent{
+  final String keyword;
+
+  OnSearchRoute({required this.keyword});
+
+  @override
+  List<Object?> get props => [keyword];
+}
+
 class OnInitRoute extends TravelRouteEvent{
   final String id;
 

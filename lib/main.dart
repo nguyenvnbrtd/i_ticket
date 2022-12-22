@@ -9,7 +9,6 @@ import 'package:flutter_animation/core/utils/utils_helper.dart';
 import 'package:flutter_animation/features/splash/pages/splash_screen.dart';
 import 'package:flutter_animation/repos/user_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'core/src/app_colors.dart';
 import 'core/src/app_theme.dart';
@@ -29,7 +28,6 @@ void main() async {
   runZonedGuarded(
     () {
       runApp(const MyApp());
-      FlutterNativeSplash.remove();
     },
     (error, stack) {
       LogUtils.e(message: error.toString());

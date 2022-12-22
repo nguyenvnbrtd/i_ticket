@@ -36,8 +36,7 @@ dependencies:
   flutter_bloc: ^8.0.0
   equatable: ^2.0.3
   intl: ^0.17.0
-  #splash_screen
-  flutter_native_splash: ^2.2.16
+
   flutter_launcher_icons: ^0.11.0
   #firebase:
   firebase_core: ^2.3.0
@@ -80,17 +79,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
-    
-flutter_native_splash:
-  color: "#52eaff"
-  image: assets/images/launchScreen.png
-  color_dark: #827d7d
-  image_dark: assets/images/launchScreen.png
-  android: true
-  ios: true
-  android_gravity: center_vertical
-  ios_content_mode: scaleAspectFit
-  fullscreen: true
 
 flutter_icons:
   android: "launcher_icon"

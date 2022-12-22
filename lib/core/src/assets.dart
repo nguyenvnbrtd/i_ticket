@@ -2,6 +2,8 @@
 class Assets {
   Assets._();
 
+  static const String splashImage = 'assets/images/splash.png';
+
   static const String googleIcon = 'assets/images/ic_gg.png';
   static const String eyeIcon = 'assets/images/eye_1.png';
   static const String homeIcon = 'assets/images/home.png';

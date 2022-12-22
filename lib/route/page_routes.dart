@@ -47,9 +47,9 @@ class Routes {
 
     switch (settings.name) {
       case splash:
-        return SlideRightRoute(
-          routeSettings: const RouteSettings(name: splash),
-          widget: const SplashScreen(),
+        return MaterialPageRoute(
+          builder: (context) => const SplashScreen(),
+          settings: const RouteSettings(name: splash),
         );
       case login:
         return SlideRightRoute(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation/core/blocs/authentication/authentication_bloc.dart';
 import 'package:flutter_animation/core/blocs/authentication/authentication_event.dart';
+import 'package:flutter_animation/core/src/assets.dart';
+import 'package:flutter_animation/widgets/base_screen/origin_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/splash_screen_bloc.dart';
 
@@ -16,7 +18,8 @@ class _SplashScreen extends State<SplashScreen> {
   @override
   void initState() {
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await Future.delayed(const Duration(milliseconds: 500));
       context.read<AuthenticationBloc>().add(OnStartAuthentication());
     });
 
@@ -27,10 +30,8 @@ class _SplashScreen extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => SplashScreenBloc(),
-      child: const Scaffold(
-        body: Center(
-          child: Text('Splash Screen'),
-        ),
+      child: OriginScreen(
+        child: Image.asset(Assets.splashImage, fit: BoxFit.contain),
       ),
     );
   }

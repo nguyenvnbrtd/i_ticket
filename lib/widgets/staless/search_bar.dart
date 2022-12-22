@@ -8,6 +8,8 @@ class SearchBar extends StatelessWidget {
 
   const SearchBar({Key? key, required this.onChange}) : super(key: key);
 
+  final String hint = 'Search';
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,7 +21,7 @@ class SearchBar extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: DeviceDimension.padding),
               child: Stack(
                 children: [
-                  TextInput(controller: TextEditingController(), onTextChange: onChange),
+                  TextInput(controller: TextEditingController(), onTextChange: onChange, hint: hint),
                   Positioned(
                     bottom: 10,
                     left: 0,

@@ -1,8 +1,8 @@
 # i_ticket
 
-A new Flutter project.
+A Flutter project, that is doing booking bus ticket for you (just in your imagination)
 
-## Getting Started
+## Any proplem?
 Contact the developer.
 
-Email: co cai nit.
+Email: ....
